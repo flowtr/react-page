@@ -132,12 +132,12 @@ ze3">)</span></span></span></span></span></span></span></div>'
 }
 ```
 
-- Remember install KATEX and import CSS from `node-markdown-parser/lib/katex/style.css`
+- Remember import CSS from `node_modules/node-markdown-parser/lib/katex/katex.min.css`
 
-### Also works with Prismjs!!
+### Also works with Prismjs:
 
 ```js
 const x = () => x * 3;
 ```
 
-- Remember import CSS from `node-markdown-parser/lib/prismjs/themes/<awesome-theme>.css`
+- Remember import CSS from `"node_modules/node-markdown-parser/lib/prismjs/themes/prism-nord.css"`
