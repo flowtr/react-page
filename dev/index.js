@@ -1,4 +1,4 @@
-const markdownParser = require("../src/index");
+const markdownParser = require("../lib/index");
 const vfile = require("to-vfile");
 
 const parser = async (content) => {

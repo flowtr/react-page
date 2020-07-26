@@ -135,7 +135,12 @@ ze3">)</span></span></span></span></span></span></span></div>'
 - Remember import Katex CSS from:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+  integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
+  crossorigin="anonymous"
+/>
 ```
 
 or you can install Katex and import from `node_modules/katex/dist/katex.min.css`
@@ -146,4 +151,50 @@ or you can install Katex and import from `node_modules/katex/dist/katex.min.css`
 const x = () => x * 3;
 ```
 
-- Remember import Prismjs Theme CSS from `"node_modules/node-markdown-parser/lib/prismjs/themes/<awesome-theme>.css"`
+- Remember import Prismjs Theme CSS from `node_modules/node-markdown-parser/lib/prismjs/themes/<awesome-theme>.css`
+
+### Also admit RAW html inside markdown content
+
+```md
+---
+title: With Love
+subtitle: To World
+---
+
+## Making
+
+### Great things
+
+With a simple node parser
+
+And now Katex:
+
+The number PI is represented by: $\pi$
+
+A Matrix is represented by:
+
+$$
+\begin{pmatrix}
+   a & b \\
+   c & d
+\end{pmatrix}
+$$
+
+<div style="background-color: #cc0000; padding: 20px;">
+  <h3 style="color: #ccc000">HTML Raw</h3>
+</div>
+```
+
+### TOC create 5 levels of depth, H2 to H6:
+
+```json
+toc: [
+    // corresponds to H2
+    { id: 'making', depth: 2, text: 'Making' },
+    // corresponds to H3
+    { id: 'great-things', depth: 3, text: 'Great things' }
+    // corresponds to H4 ...
+    { id: 'great-things', depth: 4, text: 'Great things' }
+    ... to depth: 6
+  ]
+```
