@@ -8,6 +8,7 @@ const slug = require("remark-slug");
 const markdown = require("remark-parse");
 const unified = require("unified");
 const highlight = require("rehype-highlight");
+// const doc = require("rehype-document");
 
 const jsonCompiler = require("./compilers/json");
 
