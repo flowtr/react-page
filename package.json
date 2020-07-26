@@ -1,7 +1,7 @@
 {
   "name": "node-markdown-parser",
-  "version": "1.0.9",
-  "main": "src/index.js",
+  "version": "1.0.10-1",
+  "main": "lib/index.js",
   "license": "MIT",
   "author": {
     "name": "Cristian Enguídanos Nebot",
@@ -10,11 +10,8 @@
   "repository": {
     "url": "https://github.com/cenguidanos/node-markdown-parser"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "node lib/index.js"
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.5.0",
@@ -37,7 +34,7 @@
   },
   "keywords": [
     "markdown",
-    "highlightjs",
+    "prismjs",
     "remark",
     "rehype",
     "toc",
