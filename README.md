@@ -28,7 +28,7 @@ const markdownParser = require("node-markdown-parser");
 const markdownParser = require("node-markdown-parser");
 
 const parser = async (content) => {
-  return await markdownParser.parseContent();
+  return await markdownParser(content);
 };
 ```
 

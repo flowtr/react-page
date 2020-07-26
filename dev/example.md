@@ -22,6 +22,8 @@ $$
 \end{pmatrix}
 $$
 
+- Higghlightjs compatible:
+
 ```js
 const x = () => x + 3;
 ```

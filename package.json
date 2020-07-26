@@ -1,6 +1,6 @@
 {
   "name": "node-markdown-parser",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "src/index.js",
   "license": "MIT",
   "author": {
@@ -9,6 +9,9 @@
   },
   "repository": {
     "url": "https://github.com/cenguidanos/node-markdown-parser"
+  },
+  "publishConfig": {
+    "registry": "https://www.npmjs.com/package/node-markdown-parser"
   },
   "scripts": {
     "dev": "node src/index.js"
