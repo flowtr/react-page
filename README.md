@@ -51,6 +51,7 @@ With a simple node parser
 
 ```js
 const markdownParser = require("node-markdown-parser");
+const vfile = require("to-vfile");
 
 const data = vfile.readSync("example.md");
 
@@ -131,7 +132,7 @@ ze3">)</span></span></span></span></span></span></span></div>'
 }
 ```
 
-- Remember import CSS from ![Katex](https://katex.org/docs/browser.html) in HTML or Bundle (Webpack, Rollup, etc.)
+- Remember import CSS from [Katex](https://katex.org/docs/browser.html) in HTML or Bundle (Webpack, Rollup, etc.)
 
 * ### Also works with Highlightjs!!
 
@@ -139,4 +140,4 @@ ze3">)</span></span></span></span></span></span></span></div>'
 const x = () => x * 3;
 ```
 
-- Remember import CSS from ![Highlightjs](https://highlightjs.org/usage/) in HTML or Bundle (Webpack, Rollup, etc.)
+- Remember import CSS from [Highlightjs](https://highlightjs.org/usage/) in HTML or Bundle (Webpack, Rollup, etc.)
