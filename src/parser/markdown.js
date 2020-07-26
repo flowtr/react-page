@@ -7,7 +7,7 @@ const remark2rehype = require("remark-rehype");
 const slug = require("remark-slug");
 const markdown = require("remark-parse");
 const unified = require("unified");
-const highlight = require("rehype-highlight");
+const prismjs = require("@mapbox/rehype-prism");
 // const doc = require("rehype-document");
 
 const jsonCompiler = require("./compilers/json");
@@ -55,11 +55,11 @@ function generateBody(content) {
   return new Promise((resolve, reject) => {
     const stream = unified()
       .use(markdown, { fragment: true })
-      .use(highlight)
       .use(math)
       .use(slug)
       .use(remark2rehype, { allowDangerousHtml: true })
       .use(katex)
+      .use(prismjs)
       .use(raw)
       .use(html);
 

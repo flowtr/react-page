@@ -2,7 +2,7 @@
 
 This module process markdown data with Remark/Rehype ecosystem in nodejs environment.
 
-**Works with Highlightjs, Katex, TOC, Frontmatter, Slug...**
+**Works with Prismjs, Katex, TOC, Frontmatter, Slug...**
 
 ## Install
 
@@ -132,12 +132,12 @@ ze3">)</span></span></span></span></span></span></span></div>'
 }
 ```
 
-- Remember import CSS from [Katex](https://katex.org/docs/browser.html) in HTML or Bundle (Webpack, Rollup, etc.)
+- Remember install KATEX and import CSS from `node-markdown-parser/katex/style.css`
 
-### Also works with Highlightjs!!
+### Also works with Prismjs!!
 
 ```js
 const x = () => x * 3;
 ```
 
-- Remember import CSS from [Highlightjs](https://highlightjs.org/usage/) in HTML or Bundle (Webpack, Rollup, etc.)
+- Remember import CSS from `node-markdown-parser/prismjs/themes/<awesome-theme>.css`
