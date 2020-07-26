@@ -16,13 +16,13 @@ yarn add node-markdown-parser
 
 ## Use
 
-- ### Import lib:
+### Import lib:
 
 ```js
 const markdownParser = require("node-markdown-parser");
 ```
 
-- ### Create a async/await block, the lib returns a Promise:
+### Create a async/await block, the lib returns a Promise:
 
 ```js
 const markdownParser = require("node-markdown-parser");
@@ -32,7 +32,7 @@ const parser = async (content) => {
 };
 ```
 
-- ### Create a Markdown file with `Frontmatter`:
+### Create a Markdown file with `Frontmatter`:
 
 ```md
 ---
@@ -47,7 +47,7 @@ subtitle: To World
 With a simple node parser
 ```
 
-- ### Read file from system with `to-vfile`:
+### Read file from system with `to-vfile`:
 
 ```js
 const markdownParser = require("node-markdown-parser");
@@ -63,7 +63,7 @@ const parser = async (content) => {
 parser(data);
 ```
 
-- ### The object example returned have Frontmatter variables and TOC (table of contents) data:
+### The object example returned have Frontmatter variables and TOC (table of contents) data:
 
 ```js
 const objReturned = {
@@ -82,7 +82,7 @@ const objReturned = {
 };
 ```
 
-- ### Also support Katex in inline and display mode:
+### Also support Katex in inline and display mode:
 
 ```
 ---
@@ -134,7 +134,7 @@ ze3">)</span></span></span></span></span></span></span></div>'
 
 - Remember import CSS from [Katex](https://katex.org/docs/browser.html) in HTML or Bundle (Webpack, Rollup, etc.)
 
-* ### Also works with Highlightjs!!
+### Also works with Highlightjs!!
 
 ```js
 const x = () => x * 3;

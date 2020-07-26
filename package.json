@@ -1,11 +1,14 @@
 {
   "name": "node-markdown-parser",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "main": "src/index.js",
   "license": "MIT",
   "author": {
     "name": "Cristian Enguídanos Nebot",
     "email": "cenguidanos@protonmail.com"
+  },
+  "repository": {
+    "url": "https://github.com/cenguidanos/node-markdown-parser"
   },
   "scripts": {
     "dev": "node src/index.js"
@@ -26,5 +29,15 @@
     "remark-slug": "^6.0.0",
     "to-vfile": "^6.1.0",
     "unified": "^9.1.0"
-  }
+  },
+  "keywords": [
+    "markdown",
+    "highlightjs",
+    "remark",
+    "rehype",
+    "toc",
+    "frontmatter",
+    "parser",
+    "node"
+  ]
 }
