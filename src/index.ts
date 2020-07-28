@@ -90,7 +90,6 @@ function generateBody(content: any) {
       if (error) {
         return reject(error);
       }
-      console.log(file);
       resolve(file.contents);
     });
   });
