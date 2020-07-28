@@ -1,6 +1,6 @@
 {
   "name": "node-markdown-parser",
-  "version": "1.0.10-9",
+  "version": "1.0.10-10",
   "main": "lib/index.js",
   "license": "MIT",
   "author": {

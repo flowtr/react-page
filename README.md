@@ -138,7 +138,17 @@ or you can install Katex and import from `node_modules/katex/dist/katex.min.css`
 
 ### Also works with Prismjs:
 
-- Remember import Prismjs Theme CSS from `node_modules/node-markdown-parser/node_modules/prism-themes/themes/<awesome-theme>.css`
+#### Install prismjs themes:
+
+```bash
+#npm
+npm i prism-themes
+
+#yarn
+yarn add prism-themes
+```
+
+- Remember import Prismjs Theme CSS from `node_modules\prism-themes\themes\<awesome-theme>.css`
 
 ### Also admit RAW html inside markdown content
 
