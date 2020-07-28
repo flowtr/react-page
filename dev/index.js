@@ -3,7 +3,7 @@ const vfile = require("to-vfile");
 
 const parser = async (content) => {
   const doc = await markdownParser(content);
-  console.log(doc);
+  console.log(JSON.parse(doc));
 };
 
 const data = vfile.readSync("./dev/example.md");

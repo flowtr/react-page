@@ -53,7 +53,7 @@ subtitle: To World
 _With a simple node parser_
 ```
 
-### Read file from system with `to-vfile`:
+### Read file from system with `to-vfile` and parse JSON:
 
 ```js
 const markdownParser = require("node-markdown-parser");
@@ -63,7 +63,7 @@ const data = vfile.readSync("example.md");
 
 const parser = async (content) => {
   const doc = await markdownParser(content);
-  console.log(doc);
+  console.log(JSON.parse(doc));
 };
 
 parser(data);
