@@ -32,7 +32,7 @@ const parser = async (content) => {
 };
 ```
 
-### Create a Markdown file with `Frontmatter`:
+### Create a Markdown file with `Yaml` variables:
 
 ```md
 ---
@@ -44,7 +44,13 @@ subtitle: To World
 
 ### Great things
 
-With a simple node parser
+#### Great things 4
+
+##### Great things 5
+
+###### Great things 6
+
+_With a simple node parser_
 ```
 
 ### Read file from system with `to-vfile`:
@@ -63,23 +69,29 @@ const parser = async (content) => {
 parser(data);
 ```
 
-### The object example returned have Frontmatter variables and TOC (table of contents) data:
+### The object example returned have _yaml_ variables and TOC data up to 6 levels (H6) with slug (id):
 
-```js
-const objReturned = {
-  data: {
-    title: "With Love",
-    subtitle: "To World",
-  },
-  toc: [
-    { id: "making", depth: 2, text: "Making" },
-    { id: "great-things", depth: 3, text: "Great things" },
+```json
+{
+  "title": "With Love",
+  "subtitle": "To World",
+  "extension": ".md",
+  "updatedAt": 1595938654509,
+  "toc": [
+    { "id": "making", "depth": 2, "text": "Making" },
+    { "id": "great-things", "depth": 3, "text": "Great things" },
+    { "id": "great-things-4", "depth": 4, "text": "Great things 4" },
+    { "id": "great-things-5", "depth": 5, "text": "Great things 5" },
+    { "id": "great-things-6", "depth": 6, "text": "Great things 6" }
   ],
-  body:
-    '<h2 id="making">Making</h2>\n' +
-    '<h3 id="great-things">Great things</h3>\n' +
-    "<p>With a simple node parser</p>",
-};
+  "body":
+    "<h2 id=\"making\">Making</h2>\n" +
+    "<h3 id=\"great-things\">Great things</h3>\n" +
+    "<h4 id=\"great-things-4\">Great things 4</h4>\n" +
+    "<h5 id=\"great-things-5\">Great things 5</h5>\n" +
+    "<h6 id=\"great-things-6\">Great things 6</h6>\n" +
+    "<p><em>With a simple node parser</em></p>"
+}
 ```
 
 ### Also support Katex in inline and display mode:
@@ -111,27 +123,6 @@ $$
 
 ```
 
-### The output:
-
-```js
-const objReturned = {
-  data: { title: 'With Love', subtitle: 'To World' },
-  toc: [
-    { id: 'making', depth: 2, text: 'Making' },
-    { id: 'great-things', depth: 3, text: 'Great things' }
-  ],
-  body: '<h2 id="making">Making</h2>\n' +
-    '<h3 id="great-things">Great things</h3>\n' +
-    '<p>With a simple node parser</p>\n' +
-    '<p>And now Katex:</p>\n' +
-    '<p>The number PI is represented by: <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span></span></p>\n' +
-    '<p>A Matrix is represented by:</p>\n' +
-    '<div class="math math-display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">(</mo><mtable rowspacing="0.15999999999999992em" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>a</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>b</mi></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>c</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>d</mi></mstyle></mtd></mtr></mtable><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\\begin{pmatrix} a &#x26; b \\\\ c &#x26; d \\end{pmatrix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">a</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></spa
-n></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">b</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing si
-ze3">)</span></span></span></span></span></span></span></div>'
-}
-```
-
 - Remember import Katex CSS from:
 
 ```html
@@ -147,11 +138,7 @@ or you can install Katex and import from `node_modules/katex/dist/katex.min.css`
 
 ### Also works with Prismjs:
 
-```js
-const x = () => x * 3;
-```
-
-- Remember import Prismjs Theme CSS from `node_modules/node-markdown-parser/lib/prismjs/themes/<awesome-theme>.css`
+- Remember import Prismjs Theme CSS from `node_modules/node-markdown-parser/node_modules/prism-themes/themes/<awesome-theme>.css`
 
 ### Also admit RAW html inside markdown content
 
@@ -183,18 +170,4 @@ $$
 <div style="background-color: #cc0000; padding: 20px;">
   <h3 style="color: #ccc000">HTML Raw</h3>
 </div>
-```
-
-### TOC create 5 levels of depth, H2 to H6:
-
-```json
-toc: [
-    // corresponds to H2
-    { id: 'making', depth: 2, text: 'Making' },
-    // corresponds to H3
-    { id: 'great-things', depth: 3, text: 'Great things' }
-    // corresponds to H4 ...
-    { id: 'great-things', depth: 4, text: 'Great things' }
-    ... to depth: 6
-  ]
 ```
