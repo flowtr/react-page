@@ -2,7 +2,7 @@
  * Parses nodes for JSON structure. Attempts to drop
  * unwanted properties.
  */
-function parseAsJSON(node, parent) {
+export function parseAsJSON(node, parent) {
   /**
    * Element node creates an isolated children array to
    * allow nested elements
