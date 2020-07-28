@@ -1,0 +1,273 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>node-markdown-parser</title>
+	<meta name="description" content="Documentation for node-markdown-parser">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">node-markdown-parser</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>node-markdown-parser</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#node-markdown-processor" id="node-markdown-processor" style="color: inherit; text-decoration: none;">
+					<h1>Node Markdown Processor</h1>
+				</a>
+				<p>This module process markdown data with Remark/Rehype ecosystem in nodejs environment.</p>
+				<p><strong>Works with Prismjs, Katex, TOC, Frontmatter, Slug, Emoji...</strong></p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<pre><code class="language-bash"><span class="hljs-comment"># npm</span>
+npm install node-markdown-parser
+
+<span class="hljs-comment"># yarn</span>
+yarn add node-markdown-parser</code></pre>
+				<a href="#use" id="use" style="color: inherit; text-decoration: none;">
+					<h2>Use</h2>
+				</a>
+				<a href="#import-lib" id="import-lib" style="color: inherit; text-decoration: none;">
+					<h3>Import lib:</h3>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> { parseContent } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;</code></pre>
+				<p>or</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> markdownParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;node-markdown-parser&quot;</span>);</code></pre>
+				<a href="#create-a-asyncawait-block-the-lib-returns-a-promise" id="create-a-asyncawait-block-the-lib-returns-a-promise" style="color: inherit; text-decoration: none;">
+					<h3>Create a async/await block, the lib returns a Promise:</h3>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> { parseContent } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
+
+<span class="hljs-keyword">const</span> parser = <span class="hljs-keyword">async</span> (content) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> parseContent(content);
+};</code></pre>
+				<a href="#create-a-markdown-file-with-yaml-variables" id="create-a-markdown-file-with-yaml-variables" style="color: inherit; text-decoration: none;">
+					<h3>Create a Markdown file with <code>Yaml</code> variables:</h3>
+				</a>
+				<pre><code class="language-md">---
+title: With Love
+<span class="hljs-section">subtitle: To World
+---</span>
+
+<span class="hljs-section">## Making</span>
+
+<span class="hljs-section">### Great things</span>
+
+<span class="hljs-section">#### Great things 4</span>
+
+<span class="hljs-section">##### Great things 5</span>
+
+<span class="hljs-section">###### Great things 6</span>
+
+<span class="hljs-emphasis">_With a simple node parser_</span></code></pre>
+				<a href="#read-file-from-system-with-to-vfile-and-parse-json" id="read-file-from-system-with-to-vfile-and-parse-json" style="color: inherit; text-decoration: none;">
+					<h3>Read file from system with <code>to-vfile</code> and parse JSON:</h3>
+				</a>
+				<pre><code class="language-js">import { parseContent } from &quot;node-markdown-parser&quot;;
+import * as vfile from &#x27;to-vfile
+
+const data = vfile.readSync(&quot;example.md&quot;);
+
+const parser = async (content) =&gt; {
+  const doc = await parseContent(content);
+  console.log(JSON.parse(doc));
+};
+
+parser(data);</code></pre>
+				<a href="#the-object-example-returned-have-yaml-variables-and-toc-data-up-to-6-levels-h6-with-slug-id" id="the-object-example-returned-have-yaml-variables-and-toc-data-up-to-6-levels-h6-with-slug-id" style="color: inherit; text-decoration: none;">
+					<h3>The object example returned have <em>yaml</em> variables and TOC data up to 6 levels (H6) with slug (id):</h3>
+				</a>
+				<pre><code class="language-json">{
+  <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;With Love&quot;</span>,
+  <span class="hljs-attr">&quot;subtitle&quot;</span>: <span class="hljs-string">&quot;To World&quot;</span>,
+  <span class="hljs-attr">&quot;extension&quot;</span>: <span class="hljs-string">&quot;.md&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1595938654509</span>,
+  <span class="hljs-attr">&quot;toc&quot;</span>: [
+    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;making&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Making&quot;</span> },
+    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things&quot;</span> },
+    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things-4&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things 4&quot;</span> },
+    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things-5&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things 5&quot;</span> },
+    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things-6&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">6</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things 6&quot;</span> }
+  ],
+  <span class="hljs-attr">&quot;body&quot;</span>:
+    <span class="hljs-string">&quot;&lt;h2 id=\&quot;making\&quot;&gt;Making&lt;/h2&gt;\n&quot;</span> +
+    <span class="hljs-string">&quot;&lt;h3 id=\&quot;great-things\&quot;&gt;Great things&lt;/h3&gt;\n&quot;</span> +
+    <span class="hljs-string">&quot;&lt;h4 id=\&quot;great-things-4\&quot;&gt;Great things 4&lt;/h4&gt;\n&quot;</span> +
+    <span class="hljs-string">&quot;&lt;h5 id=\&quot;great-things-5\&quot;&gt;Great things 5&lt;/h5&gt;\n&quot;</span> +
+    <span class="hljs-string">&quot;&lt;h6 id=\&quot;great-things-6\&quot;&gt;Great things 6&lt;/h6&gt;\n&quot;</span> +
+    <span class="hljs-string">&quot;&lt;p&gt;&lt;em&gt;With a simple node parser&lt;/em&gt;&lt;/p&gt;&quot;</span>
+}</code></pre>
+				<a href="#also-support-katex-in-inline-and-display-mode" id="also-support-katex-in-inline-and-display-mode" style="color: inherit; text-decoration: none;">
+					<h3>Also support Katex in inline and display mode:</h3>
+				</a>
+				<pre><code><span class="hljs-meta">---</span>
+<span class="hljs-attr">title:</span> <span class="hljs-string">With</span> <span class="hljs-string">Love</span>
+<span class="hljs-attr">subtitle:</span> <span class="hljs-string">To</span> <span class="hljs-string">World</span>
+<span class="hljs-meta">---</span>
+
+<span class="hljs-comment">## Making</span>
+
+<span class="hljs-comment">### Great things</span>
+
+<span class="hljs-string">With</span> <span class="hljs-string">a</span> <span class="hljs-string">simple</span> <span class="hljs-string">node</span> <span class="hljs-string">parser</span>
+
+<span class="hljs-attr">And now Katex:</span>
+
+<span class="hljs-attr">The number PI is represented by:</span> <span class="hljs-string">$\pi$</span>
+
+<span class="hljs-attr">A Matrix is represented by:</span>
+
+<span class="hljs-string">$$</span>
+<span class="hljs-string">\begin{pmatrix}</span>
+   <span class="hljs-string">a</span> <span class="hljs-string">&amp;</span> <span class="hljs-string">b</span> <span class="hljs-string">\\</span>
+   <span class="hljs-string">c</span> <span class="hljs-string">&amp;</span> <span class="hljs-string">d</span>
+<span class="hljs-string">\end{pmatrix}</span>
+<span class="hljs-string">$$</span>
+</code></pre><ul>
+					<li>Remember import Katex CSS from:</li>
+				</ul>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span>
+  <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>
+  <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css&quot;</span>
+  <span class="hljs-attr">integrity</span>=<span class="hljs-string">&quot;sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X&quot;</span>
+  <span class="hljs-attr">crossorigin</span>=<span class="hljs-string">&quot;anonymous&quot;</span>
+/&gt;</span></code></pre>
+				<p>or you can install Katex and import from <code>node_modules/katex/dist/katex.min.css</code></p>
+				<a href="#also-works-with-prismjs" id="also-works-with-prismjs" style="color: inherit; text-decoration: none;">
+					<h3>Also works with Prismjs:</h3>
+				</a>
+				<a href="#install-prismjs-themes" id="install-prismjs-themes" style="color: inherit; text-decoration: none;">
+					<h4>Install prismjs themes:</h4>
+				</a>
+				<pre><code class="language-bash"><span class="hljs-comment">#npm</span>
+npm i prism-themes
+
+<span class="hljs-comment">#yarn</span>
+yarn add prism-themes</code></pre>
+				<ul>
+					<li>Remember import Prismjs Theme CSS from <code>node_modules\prism-themes\themes\&lt;awesome-theme&gt;.css</code></li>
+				</ul>
+				<a href="#also-admit-raw-html-inside-markdown-content" id="also-admit-raw-html-inside-markdown-content" style="color: inherit; text-decoration: none;">
+					<h3>Also admit RAW html inside markdown content</h3>
+				</a>
+				<pre><code class="language-md">---
+title: With Love
+<span class="hljs-section">subtitle: To World
+---</span>
+
+<span class="hljs-section">## Making</span>
+
+<span class="hljs-section">### Great things</span>
+
+With a simple node parser
+
+And now Katex:
+
+The number PI is represented by: $\pi$
+
+A Matrix is represented by:
+
+$$
+\begin{pmatrix}
+   a &amp; b \\
+   c &amp; d
+\end{pmatrix}
+$$
+
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-color: #cc0000; padding: 20px;&quot;</span>&gt;</span></span>
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;color: #ccc000&quot;</span>&gt;</span></span>HTML Raw<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span>
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_compiler_json_.html">&quot;compiler.json&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

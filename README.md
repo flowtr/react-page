@@ -2,7 +2,7 @@
 
 This module process markdown data with Remark/Rehype ecosystem in nodejs environment.
 
-**Works with Prismjs, Katex, TOC, Frontmatter, Slug...**
+**Works with Prismjs, Katex, TOC, Frontmatter, Slug, Emoji...**
 
 ## Install
 
@@ -19,16 +19,22 @@ yarn add node-markdown-parser
 ### Import lib:
 
 ```js
+import { parseContent } from "node-markdown-parser";
+```
+
+or
+
+```js
 const markdownParser = require("node-markdown-parser");
 ```
 
 ### Create a async/await block, the lib returns a Promise:
 
 ```js
-const markdownParser = require("node-markdown-parser");
+import { parseContent } from "node-markdown-parser";
 
 const parser = async (content) => {
-  return await markdownParser(content);
+  return await parseContent(content);
 };
 ```
 
@@ -56,13 +62,13 @@ _With a simple node parser_
 ### Read file from system with `to-vfile` and parse JSON:
 
 ```js
-const markdownParser = require("node-markdown-parser");
-const vfile = require("to-vfile");
+import { parseContent } from "node-markdown-parser";
+import * as vfile from 'to-vfile
 
 const data = vfile.readSync("example.md");
 
 const parser = async (content) => {
-  const doc = await markdownParser(content);
+  const doc = await parseContent(content);
   console.log(JSON.parse(doc));
 };
 
