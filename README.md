@@ -18,23 +18,20 @@ yarn add node-markdown-parser
 
 ### Import lib:
 
-```js
+```ts
 import { parseContent } from "node-markdown-parser";
 ```
 
-or
+### Create a **MarkdownParserOptions** and assign content property:
 
-```js
-const markdownParser = require("node-markdown-parser");
-```
+```ts
+import { parseContent, MarkdownParserOptions } from "node-markdown-parser";
 
-### Create a async/await block, the lib returns a Promise:
+let markdownParserOptions: MarkdownParserOptions;
 
-```js
-import { parseContent } from "node-markdown-parser";
-
-const parser = async (content) => {
-  return await parseContent(content);
+markdownParserOptions = {
+  // read file from filesystem but works also with string
+  content: vfile.readSync("./demo/example.md"),
 };
 ```
 
@@ -59,20 +56,21 @@ subtitle: To World
 _With a simple node parser_
 ```
 
-### Read file from system with `to-vfile` and parse JSON:
+### Read file from system and parse JSON:
 
-```js
-import { parseContent } from "node-markdown-parser";
-import * as vfile from 'to-vfile
+```ts
+import { parseContent, MarkdownParserOptions } from "node-markdown-parser";
 
-const data = vfile.readSync("example.md");
+let markdownParserOptions: MarkdownParserOptions;
+let parsedData: string;
 
-const parser = async (content) => {
-  const doc = await parseContent(content);
-  console.log(JSON.parse(doc));
+markdownParserOptions = {
+  content: vfile.readSync("./demo/example.md"),
 };
 
-parser(data);
+parsedData = JSON.parse(parseContent(markdownParserOptions));
+
+console.log(parsedData);
 ```
 
 ### The object example returned have _yaml_ variables and TOC data up to 6 levels (H6) with slug (id):

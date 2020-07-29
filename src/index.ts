@@ -15,6 +15,13 @@ const attr = require("remark-attr");
 const browserOrNode = require("browser-or-node");
 const jsonCompiler = require("./compiler.json");
 
+import {
+  JsonCompilerFileResult,
+  MarkdownToc,
+} from "./interfaces/parser.interface";
+
+import { RehypeDocumentOptions } from "./interfaces/rehypeDocument.interface";
+
 function flattenNodeText(node: any) {
   const data =
     node.type === "text"
@@ -26,8 +33,8 @@ function flattenNodeText(node: any) {
   return data;
 }
 
-function generateToc(body: any) {
-  return body.children
+function generateToc(json: JsonCompilerFileResult): MarkdownToc[] {
+  return json.children
     .filter((node: any) => ["h2", "h3", "h4", "h5", "h6"].includes(node.tag))
     .map((node: any) => {
       const id = node.props.id;
@@ -51,56 +58,58 @@ function generateToc(body: any) {
     });
 }
 
-function generateJSON(content: any) {
-  return new Promise((resolve, reject) => {
-    const stream = unified().use(markdown).use(slug).use(remark2rehype);
-
-    stream.use(jsonCompiler).process(content, (error: any, file: any) => {
-      if (error) {
-        return reject(error);
-      }
-      resolve(file.result);
-    });
-  });
+function generateJSON(content: string): JsonCompilerFileResult {
+  return unified()
+    .use(markdown)
+    .use(slug)
+    .use(remark2rehype)
+    .use(jsonCompiler)
+    .processSync(content).result;
 }
 
-function generateBody(content: any) {
-  return new Promise((resolve, reject) => {
-    const stream = unified()
-      .use(markdown, { fragment: true })
-      .use(attr)
-      .use(emoji)
-      .use(math)
-      .use(slug)
-      .use(remark2rehype, { allowDangerousHtml: true })
-      .use(katex)
-      .use(prismjs)
-      .use(raw)
-      /* TODO: Generate test Document */
-      // .use(doc, {
-      //   css: [
-      //     "https://stackedit.io/style.css",
-      //     "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css",
-      //   ],
-      //   style: "html,body {margin: 100px;}",
-      // })
-      // .use(format)
-      .use(html);
-    stream.process(content, (error: any, file: any) => {
-      if (error) {
-        return reject(error);
-      }
-      resolve(file.contents);
-    });
-  });
+function generateBody(content: string): string {
+  return unified()
+    .use(markdown, { fragment: true })
+    .use(attr)
+    .use(emoji)
+    .use(math)
+    .use(slug)
+    .use(remark2rehype, { allowDangerousHtml: true })
+    .use(raw)
+    .use(katex)
+    .use(prismjs)
+    .use(html)
+    .processSync(content)
+    .toString();
 }
 
-export async function parseContent(file = "# Nothing\n## here") {
+// function generateBodyWithDoc(
+//   content: string,
+//   options: RehypeDocumentOptions
+// ): string {
+//   return unified()
+//     .use(markdown, { fragment: true })
+//     .use(attr)
+//     .use(emoji)
+//     .use(math)
+//     .use(slug)
+//     .use(remark2rehype, { allowDangerousHtml: true })
+//     .use(raw)
+//     .use(katex)
+//     .use(prismjs)
+//     .use(doc, options)
+//     .use(format)
+//     .use(html)
+//     .processSync(content)
+//     .toString();
+// }
+
+export function parseContent(options: MarkdownParserOptions): string {
   if (browserOrNode.isNode) {
-    const { data, content } = matter(file);
-    const json = await generateJSON(content);
-    const body = await generateBody(content);
-    const toc = generateToc(json);
+    const { data, content } = matter(options.content);
+    const json: JsonCompilerFileResult = generateJSON(content);
+    const body: string = generateBody(content);
+    const toc: MarkdownToc[] = generateToc(json);
 
     return JSON.stringify({
       ...data,
@@ -112,4 +121,11 @@ export async function parseContent(file = "# Nothing\n## here") {
   } else {
     console.error("Not Browser. Only Node environment.");
   }
+}
+
+export interface MarkdownParserOptions {
+  content: string;
+  plugins?: {
+    rehypeDocumentOptions?: RehypeDocumentOptions;
+  };
 }
