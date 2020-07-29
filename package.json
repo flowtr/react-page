@@ -1,6 +1,6 @@
 {
   "name": "node-markdown-parser",
-  "version": "1.0.10-15",
+  "version": "1.0.10-18",
   "description": "Node Markdown Parser for transform markdown files to JSON object",
   "author": {
     "name": "Cristian Enguídanos Nebot",
@@ -18,7 +18,7 @@
     "build": "tsc -p .",
     "demo": "rimraf lib && rimraf demo/index.html && yarn build && ts-node demo/index.ts",
     "docs": "yarn build && typedoc --out docs",
-    "prepublish": "yarn prebuild && yarn build && yarn docs"
+    "prepublishOnly": "yarn prebuild && yarn build && yarn docs"
   },
   "devDependencies": {
     "@types/node": "^14.0.26",
