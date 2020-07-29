@@ -1,6 +1,6 @@
 {
   "name": "node-markdown-parser",
-  "version": "1.0.10-20",
+  "version": "1.0.10-21",
   "description": "Node Markdown Parser for transform markdown files to JSON object",
   "author": {
     "name": "Cristian Enguídanos Nebot",
