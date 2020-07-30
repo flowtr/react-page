@@ -1,6 +1,6 @@
 {
   "name": "node-markdown-parser",
-  "version": "1.0.10-21",
+  "version": "1.0.3-beta.1",
   "description": "Node Markdown Parser for transform markdown files to JSON object",
   "author": {
     "name": "Cristian Enguídanos Nebot",
@@ -30,18 +30,22 @@
   "dependencies": {
     "csvtojson": "^2.0.10",
     "gray-matter": "^4.0.2",
+    "rehype-stringify": "^8.0.0",
     "remark-parse": "^8.0.3",
     "remark-rehype": "^7.0.0",
+    "remark-slug": "^6.0.0",
     "rxjs": "^6.6.0",
     "unified": "^9.1.0",
     "xml2js": "^0.4.23"
   },
   "keywords": [
+    "typescript",
     "markdown",
     "prismjs",
     "remark",
     "rehype",
     "toc",
+    "yaml",
     "frontmatter",
     "parser",
     "node",

@@ -64,11 +64,10 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#node-markdown-processor" id="node-markdown-processor" style="color: inherit; text-decoration: none;">
-					<h1>Node Markdown Processor</h1>
+				<a href="#node-typescript-markdown-processor" id="node-typescript-markdown-processor" style="color: inherit; text-decoration: none;">
+					<h1>Node Typescript Markdown Processor</h1>
 				</a>
 				<p>This module process markdown data with Remark/Rehype ecosystem in nodejs environment.</p>
-				<p><strong>Works with Prismjs, Katex, TOC, Frontmatter, Slug, Emoji...</strong></p>
 				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
 					<h2>Install</h2>
 				</a>
@@ -83,18 +82,18 @@ yarn add node-markdown-parser</code></pre>
 				<a href="#import-lib" id="import-lib" style="color: inherit; text-decoration: none;">
 					<h3>Import lib:</h3>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { parseContent } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;</code></pre>
-				<a href="#create-a-markdownparseroptions-and-assign-content-property" id="create-a-markdownparseroptions-and-assign-content-property" style="color: inherit; text-decoration: none;">
-					<h3>Create a <strong>MarkdownParserOptions</strong> and assign content property:</h3>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Markdown } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;</code></pre>
+				<a href="#create-a-markdownparseroptions" id="create-a-markdownparseroptions" style="color: inherit; text-decoration: none;">
+					<h3>Create a <strong>MarkdownParserOptions</strong>:</h3>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { parseContent, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Markdown, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
 
-<span class="hljs-keyword">let</span> markdownParserOptions: MarkdownParserOptions;
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
+  rehypePlugins: [],
+  remarkPlugins: [],
+};
 
-markdownParserOptions = {
-  <span class="hljs-comment">// read file from filesystem but works also with string</span>
-  content: vfile.readSync(<span class="hljs-string">&quot;./demo/example.md&quot;</span>),
-};</code></pre>
+<span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);</code></pre>
 				<a href="#create-a-markdown-file-with-yaml-variables" id="create-a-markdown-file-with-yaml-variables" style="color: inherit; text-decoration: none;">
 					<h3>Create a Markdown file with <code>Yaml</code> variables:</h3>
 				</a>
@@ -103,32 +102,24 @@ title: With Love
 <span class="hljs-section">subtitle: To World
 ---</span>
 
-<span class="hljs-section">## Making</span>
-
-<span class="hljs-section">### Great things</span>
-
-<span class="hljs-section">#### Great things 4</span>
-
-<span class="hljs-section">##### Great things 5</span>
-
-<span class="hljs-section">###### Great things 6</span>
-
-<span class="hljs-emphasis">_With a simple node parser_</span></code></pre>
+<span class="hljs-section"># Simple markdown doc</span></code></pre>
 				<a href="#read-file-from-system-and-parse-json" id="read-file-from-system-and-parse-json" style="color: inherit; text-decoration: none;">
 					<h3>Read file from system and parse JSON:</h3>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { parseContent, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Markdown, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
 
-<span class="hljs-keyword">let</span> markdownParserOptions: MarkdownParserOptions;
-<span class="hljs-keyword">let</span> parsedData: <span class="hljs-built_in">string</span>;
-
-markdownParserOptions = {
-  content: vfile.readSync(<span class="hljs-string">&quot;./demo/example.md&quot;</span>),
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
+  rehypePlugins: [],
+  remarkPlugins: [],
 };
 
-parsedData = <span class="hljs-built_in">JSON</span>.parse(parseContent(markdownParserOptions));
+<span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
 
-<span class="hljs-built_in">console</span>.log(parsedData);</code></pre>
+<span class="hljs-keyword">let</span> file: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);
+
+<span class="hljs-keyword">let</span> data = markdown.toJSON(file);
+
+<span class="hljs-built_in">console</span>.log(data);</code></pre>
 				<a href="#the-object-example-returned-have-yaml-variables-and-toc-data-up-to-6-levels-h6-with-slug-id" id="the-object-example-returned-have-yaml-variables-and-toc-data-up-to-6-levels-h6-with-slug-id" style="color: inherit; text-decoration: none;">
 					<h3>The object example returned have <em>yaml</em> variables and TOC data up to 6 levels (H6) with slug (id):</h3>
 				</a>
@@ -136,102 +127,81 @@ parsedData = <span class="hljs-built_in">JSON</span>.parse(parseContent(markdown
   <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;With Love&quot;</span>,
   <span class="hljs-attr">&quot;subtitle&quot;</span>: <span class="hljs-string">&quot;To World&quot;</span>,
   <span class="hljs-attr">&quot;extension&quot;</span>: <span class="hljs-string">&quot;.md&quot;</span>,
-  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1595938654509</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1596071484169</span>,
   <span class="hljs-attr">&quot;toc&quot;</span>: [
-    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;making&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Making&quot;</span> },
-    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things&quot;</span> },
-    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things-4&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things 4&quot;</span> },
-    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things-5&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things 5&quot;</span> },
-    { <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;great-things-6&quot;</span>, <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">6</span>, <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Great things 6&quot;</span> }
+    {
+      <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;simple-markdown-doc&quot;</span>,
+      <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Simple markdown doc&quot;</span>
+    }
   ],
-  <span class="hljs-attr">&quot;body&quot;</span>:
-    <span class="hljs-string">&quot;&lt;h2 id=\&quot;making\&quot;&gt;Making&lt;/h2&gt;\n&quot;</span> +
-    <span class="hljs-string">&quot;&lt;h3 id=\&quot;great-things\&quot;&gt;Great things&lt;/h3&gt;\n&quot;</span> +
-    <span class="hljs-string">&quot;&lt;h4 id=\&quot;great-things-4\&quot;&gt;Great things 4&lt;/h4&gt;\n&quot;</span> +
-    <span class="hljs-string">&quot;&lt;h5 id=\&quot;great-things-5\&quot;&gt;Great things 5&lt;/h5&gt;\n&quot;</span> +
-    <span class="hljs-string">&quot;&lt;h6 id=\&quot;great-things-6\&quot;&gt;Great things 6&lt;/h6&gt;\n&quot;</span> +
-    <span class="hljs-string">&quot;&lt;p&gt;&lt;em&gt;With a simple node parser&lt;/em&gt;&lt;/p&gt;&quot;</span>
+  <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;&lt;h1 id=\&quot;simple-markdown-doc\&quot;&gt;Simple markdown doc&lt;/h1&gt;&quot;</span>
 }</code></pre>
-				<a href="#also-support-katex-in-inline-and-display-mode" id="also-support-katex-in-inline-and-display-mode" style="color: inherit; text-decoration: none;">
-					<h3>Also support Katex in inline and display mode:</h3>
+				<blockquote>
+					<p>remark-slug is included in the lib</p>
+				</blockquote>
+				<a href="#use-remarkrehype-plugins" id="use-remarkrehype-plugins" style="color: inherit; text-decoration: none;">
+					<h3>Use <strong>Remark/Rehype</strong> plugins:</h3>
 				</a>
-				<pre><code><span class="hljs-meta">---</span>
-<span class="hljs-attr">title:</span> <span class="hljs-string">With</span> <span class="hljs-string">Love</span>
-<span class="hljs-attr">subtitle:</span> <span class="hljs-string">To</span> <span class="hljs-string">World</span>
-<span class="hljs-meta">---</span>
-
-<span class="hljs-comment">## Making</span>
-
-<span class="hljs-comment">### Great things</span>
-
-<span class="hljs-string">With</span> <span class="hljs-string">a</span> <span class="hljs-string">simple</span> <span class="hljs-string">node</span> <span class="hljs-string">parser</span>
-
-<span class="hljs-attr">And now Katex:</span>
-
-<span class="hljs-attr">The number PI is represented by:</span> <span class="hljs-string">$\pi$</span>
-
-<span class="hljs-attr">A Matrix is represented by:</span>
-
-<span class="hljs-string">$$</span>
-<span class="hljs-string">\begin{pmatrix}</span>
-   <span class="hljs-string">a</span> <span class="hljs-string">&amp;</span> <span class="hljs-string">b</span> <span class="hljs-string">\\</span>
-   <span class="hljs-string">c</span> <span class="hljs-string">&amp;</span> <span class="hljs-string">d</span>
-<span class="hljs-string">\end{pmatrix}</span>
-<span class="hljs-string">$$</span>
-</code></pre><ul>
-					<li>Remember import Katex CSS from:</li>
-				</ul>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span>
-  <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>
-  <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css&quot;</span>
-  <span class="hljs-attr">integrity</span>=<span class="hljs-string">&quot;sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X&quot;</span>
-  <span class="hljs-attr">crossorigin</span>=<span class="hljs-string">&quot;anonymous&quot;</span>
-/&gt;</span></code></pre>
-				<p>or you can install Katex and import from <code>node_modules/katex/dist/katex.min.css</code></p>
-				<a href="#also-works-with-prismjs" id="also-works-with-prismjs" style="color: inherit; text-decoration: none;">
-					<h3>Also works with Prismjs:</h3>
+				<a href="#install-plugins-in-your-root-node_modules" id="install-plugins-in-your-root-node_modules" style="color: inherit; text-decoration: none;">
+					<h4>Install plugins in your root <strong>node_modules</strong></h4>
 				</a>
-				<a href="#install-prismjs-themes" id="install-prismjs-themes" style="color: inherit; text-decoration: none;">
-					<h4>Install prismjs themes:</h4>
-				</a>
-				<pre><code class="language-bash"><span class="hljs-comment">#npm</span>
-npm i prism-themes
+				<pre><code class="language-bash">npm install remark-attr
 
-<span class="hljs-comment">#yarn</span>
-yarn add prism-themes</code></pre>
-				<ul>
-					<li>Remember import Prismjs Theme CSS from <code>node_modules\prism-themes\themes\&lt;awesome-theme&gt;.css</code></li>
-				</ul>
-				<a href="#also-admit-raw-html-inside-markdown-content" id="also-admit-raw-html-inside-markdown-content" style="color: inherit; text-decoration: none;">
-					<h3>Also admit RAW html inside markdown content</h3>
+yarn add remark-attr</code></pre>
+				<a href="#add-plugin-name-to-config-object" id="add-plugin-name-to-config-object" style="color: inherit; text-decoration: none;">
+					<h4>Add plugin name to config object</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
+  rehypePlugins: [],
+  remarkPlugins: [<span class="hljs-string">&quot;remark-attr&quot;</span>],
+};</code></pre>
+				<a href="#update-markdown-file" id="update-markdown-file" style="color: inherit; text-decoration: none;">
+					<h4>Update markdown file:</h4>
 				</a>
 				<pre><code class="language-md">---
 title: With Love
 <span class="hljs-section">subtitle: To World
 ---</span>
 
-<span class="hljs-section">## Making</span>
-
-<span class="hljs-section">### Great things</span>
-
-With a simple node parser
-
-And now Katex:
-
-The number PI is represented by: $\pi$
-
-A Matrix is represented by:
-
-$$
-\begin{pmatrix}
-   a &amp; b \\
-   c &amp; d
-\end{pmatrix}
-$$
-
-<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-color: #cc0000; padding: 20px;&quot;</span>&gt;</span></span>
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;color: #ccc000&quot;</span>&gt;</span></span>HTML Raw<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span>
-<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></code></pre>
+<span class="hljs-section"># Simple markdown doc{style=&quot;color:yellow;&quot;}</span></code></pre>
+				<a href="#output" id="output" style="color: inherit; text-decoration: none;">
+					<h4>Output:</h4>
+				</a>
+				<pre><code class="language-json">{
+  <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;With Love&quot;</span>,
+  <span class="hljs-attr">&quot;subtitle&quot;</span>: <span class="hljs-string">&quot;To World&quot;</span>,
+  <span class="hljs-attr">&quot;extension&quot;</span>: <span class="hljs-string">&quot;.md&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1596071999302</span>,
+  <span class="hljs-attr">&quot;toc&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;simple-markdown-doc&quot;</span>,
+      <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Simple markdown doc&quot;</span>
+    }
+  ],
+  <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;&lt;h1 style=\&quot;color:yellow;\&quot; id=\&quot;simple-markdown-doc\&quot;&gt;Simple markdown doc&lt;/h1&gt;&quot;</span>
+}</code></pre>
+				<a href="#add-absolute-path" id="add-absolute-path" style="color: inherit; text-decoration: none;">
+					<h3>Add absolute path:</h3>
+				</a>
+				<a href="#the-libs-needs-a-absolutepath-for-search-plugins-in-the-root-node_modules-if-you-need-change-this-value-you-can-add-to-markdownparseroptions" id="the-libs-needs-a-absolutepath-for-search-plugins-in-the-root-node_modules-if-you-need-change-this-value-you-can-add-to-markdownparseroptions" style="color: inherit; text-decoration: none;">
+					<h4>The libs needs a <code>absolutePath</code> for search plugins in the root <code>node_modules</code>. If you need change this value you can add to <strong>MarkdownParserOptions</strong>:</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
+  rehypePlugins: [<span class="hljs-string">&quot;rehype-katex&quot;</span>],
+  remarkPlugins: [<span class="hljs-string">&quot;remark-math&quot;</span>, <span class="hljs-string">&quot;remark-attr&quot;</span>],
+  absolutePath: <span class="hljs-string">&quot;/home/angular/docs/projects/test/node_modules&quot;</span>,
+};</code></pre>
+				<a href="#thanks" id="thanks" style="color: inherit; text-decoration: none;">
+					<h2>Thanks</h2>
+				</a>
+				<ul>
+					<li>@nuxt/content</li>
+				</ul>
+				<a href="#enjoy-" id="enjoy-" style="color: inherit; text-decoration: none;">
+					<h2>Enjoy !</h2>
+				</a>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -241,16 +211,34 @@ $$
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_compiler_json_.html">&quot;compiler.json&quot;</a>
+						<a href="modules/_compilers_json_.html">&quot;compilers/json&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_interfaces_parser_interface_.html">&quot;interfaces/parser.interface&quot;</a>
+						<a href="modules/_interfaces_index_.html">&quot;interfaces/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_interfaces_rehypedocument_interface_.html">&quot;interfaces/rehype<wbr>Document.interface&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_parsers_csv_.html">&quot;parsers/csv&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_parsers_index_.html">&quot;parsers/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_parsers_markdown_.html">&quot;parsers/markdown&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_parsers_xml_.html">&quot;parsers/xml&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_parsers_yaml_.html">&quot;parsers/yaml&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_utils_plugins_.html">&quot;utils/plugins&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -271,6 +259,9 @@ $$
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 			</ul>
 		</div>
 	</div>

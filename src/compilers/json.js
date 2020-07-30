@@ -10,12 +10,30 @@ export function parseAsJSON(node, parent) {
   if (node.type === "element") {
     const childs = [];
 
+    /**
+     * Replace a tag with ng-router if relative
+     */
+    if (node.tagName === "a" && (node.properties.href || "").startsWith("/")) {
+      node.tagName = "ng-router";
+      node.properties.to = node.properties.href;
+      delete node.properties.href;
+    }
+
     const filtered = {
       type: "element",
       tag: node.tagName,
       props: node.properties,
       children: childs,
     };
+
+    // Unwrap contents of the template, saving the root level inside content.
+    if (node.tagName === "template") {
+      const templateContent = [];
+      node.content.children.forEach((templateNode) =>
+        parseAsJSON(templateNode, templateContent)
+      );
+      filtered.content = templateContent;
+    }
 
     parent.push(filtered);
 
