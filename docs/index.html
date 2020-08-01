@@ -277,6 +277,25 @@ title: With Love
 <span class="hljs-keyword">let</span> data = markdown.toJSON([file1, file2]);
 
 <span class="hljs-built_in">console</span>.log(data);</code></pre>
+				<a href="#output-array" id="output-array" style="color: inherit; text-decoration: none;">
+					<h4>Output array:</h4>
+				</a>
+				<pre><code class="language-json">[
+  {
+    <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;With Love&quot;</span>,
+    <span class="hljs-attr">&quot;subtitle&quot;</span>: <span class="hljs-string">&quot;To World&quot;</span>,
+    <span class="hljs-attr">&quot;extension&quot;</span>: <span class="hljs-string">&quot;.md&quot;</span>,
+    <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1596301576871</span>,
+    <span class="hljs-attr">&quot;toc&quot;</span>: [[Object]],
+    <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;&lt;h1 id=\&quot;simple-markdown-docstylecoloryellow\&quot;&gt;Simple markdown doc{style=\&quot;color:yellow;\&quot;}&lt;/h1&gt;&quot;</span>
+  },
+  {
+    <span class="hljs-attr">&quot;extension&quot;</span>: <span class="hljs-string">&quot;.md&quot;</span>,
+    <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1596301576872</span>,
+    <span class="hljs-attr">&quot;toc&quot;</span>: [[Object]],
+    <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;&lt;h2 id=\&quot;hello-from-file-two\&quot;&gt;Hello, from file two&lt;/h2&gt;&quot;</span>
+  }
+]</code></pre>
 				<a href="#with-lokidb-support" id="with-lokidb-support" style="color: inherit; text-decoration: none;">
 					<h4>with <strong>Lokidb</strong> support:</h4>
 				</a>
@@ -289,12 +308,12 @@ title: With Love
 
 <span class="hljs-comment">// create parser</span>
 <span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
-  remarkPLugins: [<span class="hljs-string">&#x27;remark-math&#x27;</span>, <span class="hljs-string">&#x27;remark-attr&#x27;</span>]
-  rehypePlugins: [<span class="hljs-string">&#x27;rehype-katex&#x27;</span>],
+  remarkPLugins: [<span class="hljs-string">&quot;remark-math&quot;</span>, <span class="hljs-string">&quot;remark-attr&quot;</span>],
+  rehypePlugins: [<span class="hljs-string">&quot;rehype-katex&quot;</span>],
   db: {
     active: <span class="hljs-literal">true</span>,
-    collection: <span class="hljs-string">&#x27;parser&#x27;</span>
-  }
+    collection: <span class="hljs-string">&quot;parser&quot;</span>,
+  },
 };
 <span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
 

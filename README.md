@@ -236,6 +236,27 @@ let data = markdown.toJSON([file1, file2]);
 console.log(data);
 ```
 
+#### Output array:
+
+```json
+[
+  {
+    "title": "With Love",
+    "subtitle": "To World",
+    "extension": ".md",
+    "updatedAt": 1596301576871,
+    "toc": [[Object]],
+    "body": "<h1 id=\"simple-markdown-docstylecoloryellow\">Simple markdown doc{style=\"color:yellow;\"}</h1>"
+  },
+  {
+    "extension": ".md",
+    "updatedAt": 1596301576872,
+    "toc": [[Object]],
+    "body": "<h2 id=\"hello-from-file-two\">Hello, from file two</h2>"
+  }
+]
+```
+
 #### with **Lokidb** support:
 
 ```ts
@@ -248,12 +269,12 @@ import * as vfile from "to-vfile";
 
 // create parser
 let markdownOptions: MarkdownParserOptions = {
-  remarkPLugins: ['remark-math', 'remark-attr']
-  rehypePlugins: ['rehype-katex'],
+  remarkPLugins: ["remark-math", "remark-attr"],
+  rehypePlugins: ["rehype-katex"],
   db: {
     active: true,
-    collection: 'parser'
-  }
+    collection: "parser",
+  },
 };
 let markdown: Markdown = new Markdown(markdownOptions);
 
