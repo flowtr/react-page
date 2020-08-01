@@ -8,10 +8,13 @@ import { MarkdownParserOptions, MarkdownPlugin } from "../parsers/markdown";
  */
 export function processMarkdownPlugins(
   options: MarkdownParserOptions,
-  resolvePath: string
+  resolvePath: string,
+  db: any
 ): void {
   options.remarkPlugins = loopPLugins("remark", options, resolvePath);
   options.rehypePlugins = loopPLugins("rehype", options, resolvePath);
+  options.absolutePath = resolvePath;
+  options.db = db;
 }
 
 /**
@@ -26,8 +29,17 @@ const loopPLugins = (
   resolvePath: string
 ): MarkdownPlugin[] => {
   const plugins = [];
+  const typePlugins: any[] = options[`${type}Plugins`]
+    ? options[`${type}Plugins`]
+    : [];
 
-  for (const plugin of options[`${type}Plugins`]) {
+  if (typePlugins.length === 0) {
+    console.log(
+      `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m No ${type.toUpperCase()} plugins detected \x1B[0m`
+    );
+  }
+
+  for (const plugin of typePlugins) {
     let name: string;
     let options: any;
     let instance: () => {};
@@ -52,12 +64,12 @@ const loopPLugins = (
       if (options) {
         plugins.push({ name, instance, options });
         console.log(
-          `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m ${name} module loaded! \x1B[0m`
+          `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m [${name}] module loaded \x1B[0m`
         );
       } else {
         plugins.push({ name, instance });
         console.log(
-          `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m ${name} module loaded! \x1B[0m`
+          `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m [${name}] module loaded \x1B[0m`
         );
       }
     } catch (e) {

@@ -25,10 +25,7 @@ import { Markdown } from "node-markdown-parser";
 ```ts
 import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
 
-let markdownOptions: MarkdownParserOptions = {
-  rehypePlugins: [],
-  remarkPlugins: [],
-};
+let markdownOptions: MarkdownParserOptions;
 
 let markdown: Markdown = new Markdown(markdownOptions);
 ```
@@ -49,10 +46,7 @@ subtitle: To World
 ```ts
 import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
 
-let markdownOptions: MarkdownParserOptions = {
-  rehypePlugins: [],
-  remarkPlugins: [],
-};
+let markdownOptions: MarkdownParserOptions;
 
 let markdown: Markdown = new Markdown(markdownOptions);
 
@@ -98,7 +92,6 @@ yarn add remark-attr
 
 ```ts
 let markdownOptions: MarkdownParserOptions = {
-  rehypePlugins: [],
   remarkPlugins: ["remark-attr"],
 };
 ```
@@ -141,12 +134,142 @@ subtitle: To World
 let markdownOptions: MarkdownParserOptions = {
   rehypePlugins: ["rehype-katex"],
   remarkPlugins: ["remark-math", "remark-attr"],
-  absolutePath: "/home/angular/docs/projects/test/node_modules",
+  absolutePath: "/home/angular/docs/projects/project",
 };
+```
+
+### LokiDB support:
+
+#### Add `db.active` to true if you want to receive a collection **lokidb** format object:
+
+```ts
+let markdownOptions: MarkdownParserOptions = {
+  remarkPlugins: ["remark-attr"],
+  db: {
+    active: true,
+  },
+};
+```
+
+#### The output will be:
+
+```json
+{
+  "name": "data",
+  "unindexedSortComparator": "js",
+  "defaultLokiOperatorPackage": "js",
+  "_dynamicViews": [],
+  "uniqueNames": [],
+  "transforms": {},
+  "rangedIndexes": {},
+  "_data": [
+    {
+      "title": "With Love",
+      "subtitle": "To World",
+      "extension": ".md",
+      "updatedAt": 1596298947212,
+      "toc": [
+        {
+          "id": "simple-markdown-doc",
+          "depth": 1,
+          "text": "Simple markdown doc"
+        }
+      ],
+      "body": "<h1 style=\"color:yellow;\" id=\"simple-markdown-doc\">Simple markdown doc</h1>",
+      "meta": { "version": 0, "revision": 0, "created": 1596298947212 },
+      "$loki": 1
+    }
+  ],
+  "idIndex": [1],
+  "maxId": 1,
+  "_dirty": true,
+  "_nestedProperties": [],
+  "transactional": false,
+  "asyncListeners": false,
+  "disableMeta": false,
+  "disableChangesApi": true,
+  "disableDeltaChangesApi": true,
+  "cloneObjects": false,
+  "cloneMethod": "deep",
+  "changes": [],
+  "_fullTextSearch": null
+}
+```
+
+#### You can pass **collection name** in options object:
+
+```ts
+let markdownOptions: MarkdownParserOptions = {
+  remarkPlugins: ["remark-attr"],
+  db: {
+    active: true,
+    collection: "content",
+  },
+};
+```
+
+See: [LokiDB](https://github.com/LokiJS-Forge/LokiDB)
+
+### Multiple files or strings are supported in db mode and default mode
+
+#### Pass an array of data to `toJSON()` method:
+
+```ts
+import {
+  Markdown,
+  MarkdownParserOptions,
+} from "../node-markdown-parser/lib/index";
+
+import * as vfile from "to-vfile";
+
+// create parser
+let markdownOptions: MarkdownParserOptions;
+let markdown: Markdown = new Markdown(markdownOptions);
+
+// read files from system
+let file1: string = vfile.readSync("./markdown/example.md", "utf-8");
+let file2 = "## Hello, from file two";
+
+// parse array of files
+let data = markdown.toJSON([file1, file2]);
+
+console.log(data);
+```
+
+#### with **Lokidb** support:
+
+```ts
+import {
+  Markdown,
+  MarkdownParserOptions,
+} from "../node-markdown-parser/lib/index";
+
+import * as vfile from "to-vfile";
+
+// create parser
+let markdownOptions: MarkdownParserOptions = {
+  remarkPLugins: ['remark-math', 'remark-attr']
+  rehypePlugins: ['rehype-katex'],
+  db: {
+    active: true,
+    collection: 'parser'
+  }
+};
+let markdown: Markdown = new Markdown(markdownOptions);
+
+// read files from system
+let file1: string = vfile.readSync("./markdown/example.md", "utf-8");
+let file2 = "## Hello, from file two";
+
+// parse array of files
+let data = markdown.toJSON([file1, file2]);
+
+console.log(data);
 ```
 
 ## Thanks
 
 - @nuxt/content
+- @lokidb/loki
 
 ## Enjoy !

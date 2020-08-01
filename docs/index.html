@@ -88,10 +88,7 @@ yarn add node-markdown-parser</code></pre>
 				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Markdown, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
 
-<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
-  rehypePlugins: [],
-  remarkPlugins: [],
-};
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions;
 
 <span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);</code></pre>
 				<a href="#create-a-markdown-file-with-yaml-variables" id="create-a-markdown-file-with-yaml-variables" style="color: inherit; text-decoration: none;">
@@ -108,10 +105,7 @@ title: With Love
 				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Markdown, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
 
-<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
-  rehypePlugins: [],
-  remarkPlugins: [],
-};
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions;
 
 <span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
 
@@ -153,7 +147,6 @@ yarn add remark-attr</code></pre>
 					<h4>Add plugin name to config object</h4>
 				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
-  rehypePlugins: [],
   remarkPlugins: [<span class="hljs-string">&quot;remark-attr&quot;</span>],
 };</code></pre>
 				<a href="#update-markdown-file" id="update-markdown-file" style="color: inherit; text-decoration: none;">
@@ -191,13 +184,134 @@ title: With Love
 				<pre><code class="language-ts"><span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
   rehypePlugins: [<span class="hljs-string">&quot;rehype-katex&quot;</span>],
   remarkPlugins: [<span class="hljs-string">&quot;remark-math&quot;</span>, <span class="hljs-string">&quot;remark-attr&quot;</span>],
-  absolutePath: <span class="hljs-string">&quot;/home/angular/docs/projects/test/node_modules&quot;</span>,
+  absolutePath: <span class="hljs-string">&quot;/home/angular/docs/projects/project&quot;</span>,
 };</code></pre>
+				<a href="#lokidb-support" id="lokidb-support" style="color: inherit; text-decoration: none;">
+					<h3>LokiDB support:</h3>
+				</a>
+				<a href="#add-dbactive-to-true-if-you-want-to-receive-a-collection-lokidb-format-object" id="add-dbactive-to-true-if-you-want-to-receive-a-collection-lokidb-format-object" style="color: inherit; text-decoration: none;">
+					<h4>Add <code>db.active</code> to true if you want to receive a collection <strong>lokidb</strong> format object:</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
+  remarkPlugins: [<span class="hljs-string">&quot;remark-attr&quot;</span>],
+  db: {
+    active: <span class="hljs-literal">true</span>,
+  },
+};</code></pre>
+				<a href="#the-output-will-be" id="the-output-will-be" style="color: inherit; text-decoration: none;">
+					<h4>The output will be:</h4>
+				</a>
+				<pre><code class="language-json">{
+  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;data&quot;</span>,
+  <span class="hljs-attr">&quot;unindexedSortComparator&quot;</span>: <span class="hljs-string">&quot;js&quot;</span>,
+  <span class="hljs-attr">&quot;defaultLokiOperatorPackage&quot;</span>: <span class="hljs-string">&quot;js&quot;</span>,
+  <span class="hljs-attr">&quot;_dynamicViews&quot;</span>: [],
+  <span class="hljs-attr">&quot;uniqueNames&quot;</span>: [],
+  <span class="hljs-attr">&quot;transforms&quot;</span>: {},
+  <span class="hljs-attr">&quot;rangedIndexes&quot;</span>: {},
+  <span class="hljs-attr">&quot;_data&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;With Love&quot;</span>,
+      <span class="hljs-attr">&quot;subtitle&quot;</span>: <span class="hljs-string">&quot;To World&quot;</span>,
+      <span class="hljs-attr">&quot;extension&quot;</span>: <span class="hljs-string">&quot;.md&quot;</span>,
+      <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1596298947212</span>,
+      <span class="hljs-attr">&quot;toc&quot;</span>: [
+        {
+          <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;simple-markdown-doc&quot;</span>,
+          <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">1</span>,
+          <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Simple markdown doc&quot;</span>
+        }
+      ],
+      <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;&lt;h1 style=\&quot;color:yellow;\&quot; id=\&quot;simple-markdown-doc\&quot;&gt;Simple markdown doc&lt;/h1&gt;&quot;</span>,
+      <span class="hljs-attr">&quot;meta&quot;</span>: { <span class="hljs-attr">&quot;version&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">&quot;revision&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">&quot;created&quot;</span>: <span class="hljs-number">1596298947212</span> },
+      <span class="hljs-attr">&quot;$loki&quot;</span>: <span class="hljs-number">1</span>
+    }
+  ],
+  <span class="hljs-attr">&quot;idIndex&quot;</span>: [<span class="hljs-number">1</span>],
+  <span class="hljs-attr">&quot;maxId&quot;</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">&quot;_dirty&quot;</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">&quot;_nestedProperties&quot;</span>: [],
+  <span class="hljs-attr">&quot;transactional&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;asyncListeners&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;disableMeta&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;disableChangesApi&quot;</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">&quot;disableDeltaChangesApi&quot;</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">&quot;cloneObjects&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;cloneMethod&quot;</span>: <span class="hljs-string">&quot;deep&quot;</span>,
+  <span class="hljs-attr">&quot;changes&quot;</span>: [],
+  <span class="hljs-attr">&quot;_fullTextSearch&quot;</span>: <span class="hljs-literal">null</span>
+}</code></pre>
+				<a href="#you-can-pass-collection-name-in-options-object" id="you-can-pass-collection-name-in-options-object" style="color: inherit; text-decoration: none;">
+					<h4>You can pass <strong>collection name</strong> in options object:</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
+  remarkPlugins: [<span class="hljs-string">&quot;remark-attr&quot;</span>],
+  db: {
+    active: <span class="hljs-literal">true</span>,
+    collection: <span class="hljs-string">&quot;content&quot;</span>,
+  },
+};</code></pre>
+				<p>See: <a href="https://github.com/LokiJS-Forge/LokiDB">LokiDB</a></p>
+				<a href="#multiple-files-or-strings-are-supported-in-db-mode-and-default-mode" id="multiple-files-or-strings-are-supported-in-db-mode-and-default-mode" style="color: inherit; text-decoration: none;">
+					<h3>Multiple files or strings are supported in db mode and default mode</h3>
+				</a>
+				<a href="#pass-an-array-of-data-to-tojson-method" id="pass-an-array-of-data-to-tojson-method" style="color: inherit; text-decoration: none;">
+					<h4>Pass an array of data to <code>toJSON()</code> method:</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  Markdown,
+  MarkdownParserOptions,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../node-markdown-parser/lib/index&quot;</span>;
+
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> vfile <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;to-vfile&quot;</span>;
+
+<span class="hljs-comment">// create parser</span>
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions;
+<span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
+
+<span class="hljs-comment">// read files from system</span>
+<span class="hljs-keyword">let</span> file1: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);
+<span class="hljs-keyword">let</span> file2 = <span class="hljs-string">&quot;## Hello, from file two&quot;</span>;
+
+<span class="hljs-comment">// parse array of files</span>
+<span class="hljs-keyword">let</span> data = markdown.toJSON([file1, file2]);
+
+<span class="hljs-built_in">console</span>.log(data);</code></pre>
+				<a href="#with-lokidb-support" id="with-lokidb-support" style="color: inherit; text-decoration: none;">
+					<h4>with <strong>Lokidb</strong> support:</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  Markdown,
+  MarkdownParserOptions,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../node-markdown-parser/lib/index&quot;</span>;
+
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> vfile <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;to-vfile&quot;</span>;
+
+<span class="hljs-comment">// create parser</span>
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions = {
+  remarkPLugins: [<span class="hljs-string">&#x27;remark-math&#x27;</span>, <span class="hljs-string">&#x27;remark-attr&#x27;</span>]
+  rehypePlugins: [<span class="hljs-string">&#x27;rehype-katex&#x27;</span>],
+  db: {
+    active: <span class="hljs-literal">true</span>,
+    collection: <span class="hljs-string">&#x27;parser&#x27;</span>
+  }
+};
+<span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
+
+<span class="hljs-comment">// read files from system</span>
+<span class="hljs-keyword">let</span> file1: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);
+<span class="hljs-keyword">let</span> file2 = <span class="hljs-string">&quot;## Hello, from file two&quot;</span>;
+
+<span class="hljs-comment">// parse array of files</span>
+<span class="hljs-keyword">let</span> data = markdown.toJSON([file1, file2]);
+
+<span class="hljs-built_in">console</span>.log(data);</code></pre>
 				<a href="#thanks" id="thanks" style="color: inherit; text-decoration: none;">
 					<h2>Thanks</h2>
 				</a>
 				<ul>
 					<li>@nuxt/content</li>
+					<li>@lokidb/loki</li>
 				</ul>
 				<a href="#enjoy-" id="enjoy-" style="color: inherit; text-decoration: none;">
 					<h2>Enjoy !</h2>
@@ -254,6 +368,7 @@ title: With Love
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>

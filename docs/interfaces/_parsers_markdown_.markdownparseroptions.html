@@ -73,11 +73,11 @@
 				<div class="tsd-comment tsd-typography">
 					<dl class="tsd-comment-tags">
 						<dt>property</dt>
-						<dd><p>{string[] | MarkdownPlugin[]} remarkPlugins - String array for the names of the plugins to use
+						<dd><p>{any[]} remarkPlugins - String array for the names of the plugins to use
 							Alternatively, accepts an Object with &#39;name&#39; and &#39;options&#39; properties for especify lib options.</p>
 						</dd>
 						<dt>property</dt>
-						<dd><p>{string[] | MarkdownPlugin[]} rehypePlugins - String array for the names of the plugins to use
+						<dd><p>{any[]} rehypePlugins - String array for the names of the plugins to use
 							Alternatively, accepts an Object with &#39;name&#39; and &#39;options&#39; properties for especify lib options.</p>
 						</dd>
 						<dt>property</dt>
@@ -103,6 +103,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_parsers_markdown_.markdownparseroptions.html#absolutepath" class="tsd-kind-icon">absolute<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_parsers_markdown_.markdownparseroptions.html#db" class="tsd-kind-icon">db</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_parsers_markdown_.markdownparseroptions.html#rehypeplugins" class="tsd-kind-icon">rehype<wbr>Plugins</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_parsers_markdown_.markdownparseroptions.html#remarkplugins" class="tsd-kind-icon">remark<wbr>Plugins</a></li>
 							</ul>
@@ -118,27 +119,37 @@
 					<div class="tsd-signature tsd-kind-icon">absolute<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in parsers/markdown.ts:35</li>
+							<li>Defined in <a href="https://github.com/cenguidanos/node-markdown-parser/blob/34e3cd5/src/parsers/markdown.ts#L37">parsers/markdown.ts:37</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="db" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> db</h3>
+					<div class="tsd-signature tsd-kind-icon">db<span class="tsd-signature-symbol">:</span> <a href="_parsers_markdown_.markdownparserdatabaseoptions.html" class="tsd-signature-type">MarkdownParserDatabaseOptions</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cenguidanos/node-markdown-parser/blob/34e3cd5/src/parsers/markdown.ts#L38">parsers/markdown.ts:38</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="rehypeplugins" class="tsd-anchor"></a>
-					<h3>rehype<wbr>Plugins</h3>
-					<div class="tsd-signature tsd-kind-icon">rehype<wbr>Plugins<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="_parsers_markdown_.markdownplugin.html" class="tsd-signature-type">MarkdownPlugin</a><span class="tsd-signature-symbol">[]</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> rehype<wbr>Plugins</h3>
+					<div class="tsd-signature tsd-kind-icon">rehype<wbr>Plugins<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in parsers/markdown.ts:34</li>
+							<li>Defined in <a href="https://github.com/cenguidanos/node-markdown-parser/blob/34e3cd5/src/parsers/markdown.ts#L36">parsers/markdown.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="remarkplugins" class="tsd-anchor"></a>
-					<h3>remark<wbr>Plugins</h3>
-					<div class="tsd-signature tsd-kind-icon">remark<wbr>Plugins<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="_parsers_markdown_.markdownplugin.html" class="tsd-signature-type">MarkdownPlugin</a><span class="tsd-signature-symbol">[]</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> remark<wbr>Plugins</h3>
+					<div class="tsd-signature tsd-kind-icon">remark<wbr>Plugins<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in parsers/markdown.ts:33</li>
+							<li>Defined in <a href="https://github.com/cenguidanos/node-markdown-parser/blob/34e3cd5/src/parsers/markdown.ts#L35">parsers/markdown.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,6 +198,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_parsers_markdown_.markdown.html" class="tsd-kind-icon">Markdown</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="_parsers_markdown_.markdownparserdatabaseoptions.html" class="tsd-kind-icon">Markdown<wbr>Parser<wbr>Database<wbr>Options</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
@@ -194,6 +208,9 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_parsers_markdown_.markdownparseroptions.html#absolutepath" class="tsd-kind-icon">absolute<wbr>Path</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_parsers_markdown_.markdownparseroptions.html#db" class="tsd-kind-icon">db</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_parsers_markdown_.markdownparseroptions.html#rehypeplugins" class="tsd-kind-icon">rehype<wbr>Plugins</a>
@@ -214,6 +231,9 @@
 					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 						<a href="../modules/_parsers_markdown_.html#jsonc" class="tsd-kind-icon">jsonC</a>
 					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/_parsers_markdown_.html#defaultoptions" class="tsd-kind-icon">default<wbr>Options</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -224,6 +244,7 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>

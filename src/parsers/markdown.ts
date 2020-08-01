@@ -5,6 +5,8 @@ import * as slug from "remark-slug";
 import * as unified from "unified";
 import * as stringify from "rehype-stringify";
 
+import { Loki, Collection } from "@lokidb/loki";
+
 const jsonC = require("../compilers/json");
 
 import { processMarkdownPlugins } from "../utils/plugins";
@@ -22,29 +24,52 @@ export interface MarkdownPlugin {
   options?: object;
 }
 /**
- * @property {string[] | MarkdownPlugin[]} remarkPlugins - String array for the names of the plugins to use
+ * @property {any[]} remarkPlugins - String array for the names of the plugins to use
  * Alternatively, accepts an Object with 'name' and 'options' properties for especify lib options.
- * @property {string[] | MarkdownPlugin[]} rehypePlugins - String array for the names of the plugins to use
+ * @property {any[]} rehypePlugins - String array for the names of the plugins to use
  * Alternatively, accepts an Object with 'name' and 'options' properties for especify lib options.
  * @property {string} absolutePath - The lib need a absolute path to node_modules for find remark/rehype libs,
  * but you can also pass a string with your custom absolute path for node_modules.
  */
 export interface MarkdownParserOptions {
-  remarkPlugins: string[] | MarkdownPlugin[];
-  rehypePlugins: string[] | MarkdownPlugin[];
+  remarkPlugins?: any[];
+  rehypePlugins?: any[];
   absolutePath?: string;
+  db?: MarkdownParserDatabaseOptions;
 }
+
+export interface MarkdownParserDatabaseOptions {
+  active: boolean;
+  collection?: string;
+}
+
+const defaultOptions: MarkdownParserOptions = {
+  rehypePlugins: [],
+  remarkPlugins: [],
+  db: { active: false },
+};
 
 export class Markdown {
   private options: MarkdownParserOptions;
   private absolutePath: string;
+  private dbInstance: any;
 
-  constructor(options: MarkdownParserOptions) {
+  constructor(options: MarkdownParserOptions = defaultOptions) {
     this.options = options;
-    this.absolutePath = this.options.absolutePath
-      ? this.options.absolutePath
-      : cwd();
-    processMarkdownPlugins(this.options, this.absolutePath);
+
+    if (this.options.absolutePath) {
+      this.absolutePath = this.options.absolutePath;
+    } else {
+      this.absolutePath = cwd();
+    }
+
+    if (this.options.db) {
+      this.dbInstance = this.options.db;
+    } else {
+      this.dbInstance = { active: false };
+    }
+
+    processMarkdownPlugins(this.options, this.absolutePath, this.dbInstance);
   }
 
   /**
@@ -52,7 +77,55 @@ export class Markdown {
    * @param {string} file - Markdown file
    * @return {string} - Object stringified
    */
-  public toJSON(file: string): any {
+  public toJSON(file: any): any {
+    if (Array.isArray(file)) {
+      let contents: any = [];
+
+      for (let item of file) {
+        const itemFile = this.toObject(item);
+        contents.push(itemFile);
+      }
+
+      if (this.options.db.active) {
+        const collectionName = this.options.db.collection
+          ? this.options.db.collection
+          : "data";
+
+        const db: Loki = new Loki();
+        const collection: Collection = db.addCollection(collectionName);
+
+        collection.insert(contents);
+
+        const serialized = collection.toJSON();
+        contents = serialized;
+      }
+
+      return contents;
+    } else {
+      let obj = this.toObject(file);
+
+      if (this.options.db.active) {
+        const collectionName = this.options.db.collection
+          ? this.options.db.collection
+          : "data";
+
+        const db: Loki = new Loki();
+        const collection: Collection = db.addCollection(collectionName);
+
+        collection.insertOne({
+          ...obj,
+        });
+
+        const serialized = collection.toJSON();
+
+        obj = serialized;
+      }
+
+      return obj;
+    }
+  }
+
+  private toObject(file: string) {
     let { data, content } = matter(file);
 
     let json = this.generateContent(content, true);
@@ -60,7 +133,7 @@ export class Markdown {
 
     let toc: MarkdownToc[] = this.generateToc(json);
 
-    let obj = {
+    let obj: any = {
       ...data,
       extension: ".md",
       updatedAt: Date.now(),
@@ -74,9 +147,18 @@ export class Markdown {
   private generateContent(content: string, toc?: boolean): object {
     let stream = unified().use(parse).use(slug);
 
-    stream = this.processPluginsFor("remark", stream);
+    let remarkStream = this.processPluginsFor("remark", stream);
+    let rehypeStream = this.processPluginsFor("rehype", stream);
+
+    if (remarkStream) {
+      stream = remarkStream;
+    }
+
     stream = stream.use(remark2rehype, { allowDangerousHtml: true });
-    stream = this.processPluginsFor("rehype", stream);
+
+    if (rehypeStream) {
+      stream = rehypeStream;
+    }
 
     if (toc) {
       let tree: any = stream.use(jsonC).processSync(content);
@@ -124,7 +206,9 @@ export class Markdown {
   }
 
   private processPluginsFor(type: string, stream: any): any {
-    for (const plugin of this.options[`${type}Plugins`]) {
+    const typePlugin: any[] = this.options[`${type}Plugins`];
+
+    for (const plugin of typePlugin) {
       stream = plugin.options
         ? stream.use(plugin.instance, plugin.options)
         : stream.use(plugin.instance);
