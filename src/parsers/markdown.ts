@@ -79,7 +79,6 @@ export class Markdown {
    * @return {string} - Object stringified
    */
   public toJSON(file: any): any {
-    console.log(file);
     let obj: any = [];
 
     if (Array.isArray(file)) {
@@ -114,7 +113,6 @@ export class Markdown {
       if (typeof file === "string") {
         obj = this.toObject(file);
       } else {
-        console.log(file);
         obj = this.toObject(file.file);
 
         delete file.file;
