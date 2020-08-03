@@ -50,7 +50,7 @@ let markdownOptions: MarkdownParserOptions;
 
 let markdown: Markdown = new Markdown(markdownOptions);
 
-let file: string = vfile.readSync("./markdown/example.md", "utf-8");
+let file: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
 
 let data = markdown.toJSON(file);
 
@@ -136,6 +136,89 @@ let markdownOptions: MarkdownParserOptions = {
   remarkPlugins: ["remark-math", "remark-attr"],
   absolutePath: "/home/angular/docs/projects/project",
 };
+```
+
+### Extra properties:
+
+#### You can add extra properties in format:
+
+```ts
+import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
+
+let markdownOptions: MarkdownParserOptions;
+
+let markdown: Markdown = new Markdown(markdownOptions);
+
+let file: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
+
+let data = markdown.toJSON({ file, date: Date.now(), age: 27 });
+
+console.log(data);
+```
+
+#### Output
+
+```json
+{
+  "title": "With Love",
+  "subtitle": "To World",
+  "extension": ".md",
+  "updatedAt": 1596414314975,
+  "toc": [
+    {
+      "id": "simple-markdown-docstylecoloryellow",
+      "depth": 1,
+      "text": "Simple markdown doc{style=\"color:yellow;\"}"
+    }
+  ],
+  "body": "<h1 id=\"simple-markdown-docstylecoloryellow\">Simple markdown doc{style=\"color:yellow;\"}</h1>",
+  "date": 1596414314960,
+  "age": 27
+}
+```
+
+#### Also as array
+
+```ts
+import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
+
+let markdownOptions: MarkdownParserOptions;
+
+let markdown: Markdown = new Markdown(markdownOptions);
+
+let file: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
+
+let data = markdown.toJSON([
+  { file, date: Date.now(), age: 27 },
+  "# Other stuff in string format",
+]);
+
+console.log(data);
+```
+
+#### Output
+
+```ts
+[
+  {
+    title: "With Love",
+    subtitle: "To World",
+    extension: ".md",
+    updatedAt: 1596414423314,
+    toc: [[Object]],
+    body:
+      '<h1 id="simple-markdown-docstylecoloryellow">Simple markdown doc{style="color:yellow;"}</h1>',
+    date: 1596414423299,
+    age: 27,
+  },
+  {
+    extension: ".md",
+    updatedAt: 1596414423315,
+    toc: [[Object]],
+    body:
+      '<h1 id="other-stuff-in-string-format">Other stuff in string format</h1>',
+  },
+];
 ```
 
 ### LokiDB support:
@@ -227,7 +310,7 @@ let markdownOptions: MarkdownParserOptions;
 let markdown: Markdown = new Markdown(markdownOptions);
 
 // read files from system
-let file1: string = vfile.readSync("./markdown/example.md", "utf-8");
+let file1: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
 let file2 = "## Hello, from file two";
 
 // parse array of files

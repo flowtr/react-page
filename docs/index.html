@@ -109,7 +109,7 @@ title: With Love
 
 <span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
 
-<span class="hljs-keyword">let</span> file: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);
+<span class="hljs-keyword">let</span> file: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>).contents;
 
 <span class="hljs-keyword">let</span> data = markdown.toJSON(file);
 
@@ -186,6 +186,82 @@ title: With Love
   remarkPlugins: [<span class="hljs-string">&quot;remark-math&quot;</span>, <span class="hljs-string">&quot;remark-attr&quot;</span>],
   absolutePath: <span class="hljs-string">&quot;/home/angular/docs/projects/project&quot;</span>,
 };</code></pre>
+				<a href="#extra-properties" id="extra-properties" style="color: inherit; text-decoration: none;">
+					<h3>Extra properties:</h3>
+				</a>
+				<a href="#you-can-add-extra-properties-in-format" id="you-can-add-extra-properties-in-format" style="color: inherit; text-decoration: none;">
+					<h4>You can add extra properties in format:</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Markdown, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
+
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions;
+
+<span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
+
+<span class="hljs-keyword">let</span> file: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>).contents;
+
+<span class="hljs-keyword">let</span> data = markdown.toJSON({ file, date: <span class="hljs-built_in">Date</span>.now(), age: <span class="hljs-number">27</span> });
+
+<span class="hljs-built_in">console</span>.log(data);</code></pre>
+				<a href="#output-1" id="output-1" style="color: inherit; text-decoration: none;">
+					<h4>Output</h4>
+				</a>
+				<pre><code class="language-json">{
+  <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;With Love&quot;</span>,
+  <span class="hljs-attr">&quot;subtitle&quot;</span>: <span class="hljs-string">&quot;To World&quot;</span>,
+  <span class="hljs-attr">&quot;extension&quot;</span>: <span class="hljs-string">&quot;.md&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-number">1596414314975</span>,
+  <span class="hljs-attr">&quot;toc&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;simple-markdown-docstylecoloryellow&quot;</span>,
+      <span class="hljs-attr">&quot;depth&quot;</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Simple markdown doc{style=\&quot;color:yellow;\&quot;}&quot;</span>
+    }
+  ],
+  <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;&lt;h1 id=\&quot;simple-markdown-docstylecoloryellow\&quot;&gt;Simple markdown doc{style=\&quot;color:yellow;\&quot;}&lt;/h1&gt;&quot;</span>,
+  <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-number">1596414314960</span>,
+  <span class="hljs-attr">&quot;age&quot;</span>: <span class="hljs-number">27</span>
+}</code></pre>
+				<a href="#also-as-array" id="also-as-array" style="color: inherit; text-decoration: none;">
+					<h4>Also as array</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Markdown, MarkdownParserOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-markdown-parser&quot;</span>;
+
+<span class="hljs-keyword">let</span> markdownOptions: MarkdownParserOptions;
+
+<span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
+
+<span class="hljs-keyword">let</span> file: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>).contents;
+
+<span class="hljs-keyword">let</span> data = markdown.toJSON([
+  { file, date: <span class="hljs-built_in">Date</span>.now(), age: <span class="hljs-number">27</span> },
+  <span class="hljs-string">&quot;# Other stuff in string format&quot;</span>,
+]);
+
+<span class="hljs-built_in">console</span>.log(data);</code></pre>
+				<a href="#output-2" id="output-2" style="color: inherit; text-decoration: none;">
+					<h4>Output</h4>
+				</a>
+				<pre><code class="language-ts">[
+  {
+    title: <span class="hljs-string">&quot;With Love&quot;</span>,
+    subtitle: <span class="hljs-string">&quot;To World&quot;</span>,
+    extension: <span class="hljs-string">&quot;.md&quot;</span>,
+    updatedAt: <span class="hljs-number">1596414423314</span>,
+    toc: [[<span class="hljs-built_in">Object</span>]],
+    body:
+      <span class="hljs-string">&#x27;&lt;h1 id=&quot;simple-markdown-docstylecoloryellow&quot;&gt;Simple markdown doc{style=&quot;color:yellow;&quot;}&lt;/h1&gt;&#x27;</span>,
+    date: <span class="hljs-number">1596414423299</span>,
+    age: <span class="hljs-number">27</span>,
+  },
+  {
+    extension: <span class="hljs-string">&quot;.md&quot;</span>,
+    updatedAt: <span class="hljs-number">1596414423315</span>,
+    toc: [[<span class="hljs-built_in">Object</span>]],
+    body:
+      <span class="hljs-string">&#x27;&lt;h1 id=&quot;other-stuff-in-string-format&quot;&gt;Other stuff in string format&lt;/h1&gt;&#x27;</span>,
+  },
+];</code></pre>
 				<a href="#lokidb-support" id="lokidb-support" style="color: inherit; text-decoration: none;">
 					<h3>LokiDB support:</h3>
 				</a>
@@ -270,7 +346,7 @@ title: With Love
 <span class="hljs-keyword">let</span> markdown: Markdown = <span class="hljs-keyword">new</span> Markdown(markdownOptions);
 
 <span class="hljs-comment">// read files from system</span>
-<span class="hljs-keyword">let</span> file1: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);
+<span class="hljs-keyword">let</span> file1: <span class="hljs-built_in">string</span> = vfile.readSync(<span class="hljs-string">&quot;./markdown/example.md&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>).contents;
 <span class="hljs-keyword">let</span> file2 = <span class="hljs-string">&quot;## Hello, from file two&quot;</span>;
 
 <span class="hljs-comment">// parse array of files</span>

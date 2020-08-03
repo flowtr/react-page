@@ -11,6 +11,7 @@ const jsonC = require("../compilers/json");
 
 import { processMarkdownPlugins } from "../utils/plugins";
 import { cwd } from "process";
+import { isString } from "util";
 
 export interface MarkdownToc {
   id: string;
@@ -78,12 +79,21 @@ export class Markdown {
    * @return {string} - Object stringified
    */
   public toJSON(file: any): any {
-    if (Array.isArray(file)) {
-      let contents: any = [];
+    console.log(file);
+    let obj: any = [];
 
+    if (Array.isArray(file)) {
       for (let item of file) {
-        const itemFile = this.toObject(item);
-        contents.push(itemFile);
+        if (typeof item === "string") {
+          const itemFile = this.toObject(item);
+          obj.push(itemFile);
+        } else {
+          const itemFile = this.toObject(item.file);
+
+          delete item.file;
+
+          obj.push({ ...itemFile, ...item });
+        }
       }
 
       if (this.options.db.active) {
@@ -94,15 +104,23 @@ export class Markdown {
         const db: Loki = new Loki();
         const collection: Collection = db.addCollection(collectionName);
 
-        collection.insert(contents);
+        collection.insert(obj);
 
-        const serialized = collection.toJSON();
-        contents = serialized;
+        obj = collection.toJSON();
       }
 
-      return contents;
+      return obj;
     } else {
-      let obj = this.toObject(file);
+      if (typeof file === "string") {
+        obj = this.toObject(file);
+      } else {
+        console.log(file);
+        obj = this.toObject(file.file);
+
+        delete file.file;
+
+        obj = { ...obj, ...file };
+      }
 
       if (this.options.db.active) {
         const collectionName = this.options.db.collection
@@ -116,16 +134,14 @@ export class Markdown {
           ...obj,
         });
 
-        const serialized = collection.toJSON();
-
-        obj = serialized;
+        obj = collection.toJSON();
       }
 
       return obj;
     }
   }
 
-  private toObject(file: string) {
+  private toObject(file: any) {
     let { data, content } = matter(file);
 
     let json = this.generateContent(content, true);
