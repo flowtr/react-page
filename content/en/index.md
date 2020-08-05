@@ -1,6 +1,6 @@
 ---
 title: "Node Markdown Parser"
-description: "Empower your NuxtJS application with this awesome module."
+description: "Transform Markdown to JSON object with metadata"
 position: 1
 category: "Getting started"
 menuTitle: "Installation"
@@ -101,7 +101,11 @@ console.log(data);
 }
 ```
 
-> remark-slug is included in the lib
+<alert type="info">
+
+remark-slug & rehype-raw are included in the lib
+
+</alert>
 
 ## `Remark` plugins
 
@@ -450,12 +454,13 @@ console.log(data);
 ]
 ```
 
-## Thanks
+## Special thanks
 
-- @nuxt/content
-- @lokidb/loki
-- unifiedjs/unified
-- remarkjs/remark
-- rehypejs/rehype
+- [@nuxt/content](https://github.com/nuxt/content)
+- [@lokidb/loki](https://github.com/LokiJS-Forge/LokiDB)
+- [unifiedjs/unified](https://github.com/unifiedjs/unified)
+- [remarkjs/remark](https://github.com/remarkjs/remark)
+- [rehypejs/rehype](https://github.com/rehypejs/rehype)
+- [Render.com](https://render.com/)
 
 ## Enjoy !

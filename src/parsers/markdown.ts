@@ -4,6 +4,7 @@ import * as parse from "remark-parse";
 import * as slug from "remark-slug";
 import * as unified from "unified";
 import * as stringify from "rehype-stringify";
+import * as raw from "rehype-raw";
 
 import { Loki, Collection } from "@lokidb/loki";
 
@@ -196,7 +197,9 @@ export class Markdown {
   }
 
   private generateContent(content: string, toc?: boolean): object {
-    let stream = unified().use(parse).use(slug);
+    let stream = unified()
+      .use(parse)
+      .use(slug);
 
     let remarkStream = this.processPluginsFor("remark", stream);
     let rehypeStream = this.processPluginsFor("rehype", stream);
@@ -205,7 +208,7 @@ export class Markdown {
       stream = remarkStream;
     }
 
-    stream = stream.use(remark2rehype, { allowDangerousHtml: true });
+    stream = stream.use(remark2rehype, { allowDangerousHtml: true }).use(raw);
 
     if (rehypeStream) {
       stream = rehypeStream;
