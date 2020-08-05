@@ -11,7 +11,7 @@ const jsonC = require("../compilers/json");
 
 import { processMarkdownPlugins } from "../utils/plugins";
 import { cwd } from "process";
-import { isString } from "util";
+import { Logger } from "../utils/logger";
 
 export interface MarkdownToc {
   id: string;
@@ -54,8 +54,11 @@ export class Markdown {
   private options: MarkdownParserOptions;
   private absolutePath: string;
   private dbInstance: any;
+  private logger: Logger;
 
   constructor(options: MarkdownParserOptions = defaultOptions) {
+    this.logger = new Logger();
+
     this.options = options;
 
     if (this.options.absolutePath) {
@@ -139,23 +142,57 @@ export class Markdown {
     }
   }
 
-  private toObject(file: any) {
-    let { data, content } = matter(file);
+  /**
+   * Converts markdown document to it's HTML content
+   * @param {string} file - Markdown file
+   * @return {string} - Object stringified
+   */
+  public toHTML(file: any): any {
+    let obj: any = [];
 
-    let json = this.generateContent(content, true);
-    let body = this.generateContent(content);
+    if (Array.isArray(file)) {
+      for (let item of file) {
+        if (typeof item === "string") {
+          const itemFile = this.toObject(item, true);
+          obj.push(itemFile);
+        } else {
+          this.logger.error("HTML mode only accepts strings");
+        }
+      }
+      return obj;
+    } else {
+      if (typeof file === "string") {
+        obj = this.toObject(file);
+      } else {
+        this.logger.error("HTML mode only accepts strings");
+      }
 
-    let toc: MarkdownToc[] = this.generateToc(json);
+      return obj;
+    }
+  }
 
-    let obj: any = {
-      ...data,
-      extension: ".md",
-      updatedAt: Date.now(),
-      toc,
-      body,
-    };
+  private toObject(file: any, onlyBody: boolean = false) {
+    if (!onlyBody) {
+      let { data, content } = matter(file);
 
-    return obj;
+      let json = this.generateContent(content, true);
+      let body = this.generateContent(content);
+
+      let toc: MarkdownToc[] = this.generateToc(json);
+
+      let obj: any = {
+        ...data,
+        extension: ".md",
+        updatedAt: Date.now(),
+        toc,
+        body,
+      };
+
+      return obj;
+    } else {
+      let body = this.generateContent(file);
+      return body;
+    }
   }
 
   private generateContent(content: string, toc?: boolean): object {

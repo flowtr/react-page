@@ -1,6 +1,9 @@
 import * as path from "path";
 import { MarkdownParserOptions, MarkdownPlugin } from "../parsers/markdown";
 
+import { Logger } from "./logger";
+const logger = new Logger();
+
 /**
  * @param {string} resolvePath - Absolute path to parent node_modules
  * @param {MarkdownParserOptions} options - Remark/Rehype plugins
@@ -34,9 +37,7 @@ const loopPLugins = (
     : [];
 
   if (typePlugins.length === 0) {
-    console.log(
-      `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m No ${type.toUpperCase()} plugins detected \x1B[0m`
-    );
+    logger.success(`No ${type.toUpperCase()} plugins detected`);
   }
 
   for (const plugin of typePlugins) {
@@ -63,19 +64,13 @@ const loopPLugins = (
 
       if (options) {
         plugins.push({ name, instance, options });
-        console.log(
-          `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m [${name}] module loaded \x1B[0m`
-        );
+        logger.success(`[${name}] module loaded`);
       } else {
         plugins.push({ name, instance });
-        console.log(
-          `\x1B[32m [Node Typescript Markdown] Success: \x1B[35m [${name}] module loaded \x1B[0m`
-        );
+        logger.success(`[${name}] module loaded`);
       }
     } catch (e) {
-      console.error(
-        `\x1B[31m [Node Typescript Markdown] Error: Cannot find module ${name} on ${pathToRequire} \x1B[0m`
-      );
+      logger.error(`Cannot find module ${name} on ${pathToRequire}`);
     }
   }
 

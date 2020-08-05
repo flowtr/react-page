@@ -1,0 +1,16 @@
+[
+  {
+    "name": "releases___en",
+    "path": "/releases",
+    "component": "C:\\\\Users\\\\Cristian\\\\Repositorios\\\\libs\\\\node-markdown-parser\\\\node_modules\\\\@nuxt\\\\content-theme-docs\\\\src\\\\pages\\\\releases.vue",
+    "chunkName": "pages/releases",
+    "_name": "_7cc22b3c"
+  },
+  {
+    "name": "slug___en",
+    "path": "/:slug?",
+    "component": "C:\\\\Users\\\\Cristian\\\\Repositorios\\\\libs\\\\node-markdown-parser\\\\node_modules\\\\@nuxt\\\\content-theme-docs\\\\src\\\\pages\\\\_slug.vue",
+    "chunkName": "pages/_slug",
+    "_name": "_1b831aca"
+  }
+]
