@@ -177,7 +177,7 @@ export class Markdown {
       let { data, content } = matter(file);
 
       let json = this.generateContent(content, true);
-      let body = this.generateContent(content);
+      let body = this.generateContent(content, false);
 
       let toc: MarkdownToc[] = this.generateToc(json);
 
@@ -196,30 +196,24 @@ export class Markdown {
     }
   }
 
-  private generateContent(content: string, toc?: boolean): object {
+  private generateContent(content: string, toc: boolean = false): object {
     let stream = unified()
       .use(parse)
       .use(slug);
 
-    let remarkStream = this.processPluginsFor("remark", stream);
-    let rehypeStream = this.processPluginsFor("rehype", stream);
-
-    if (remarkStream) {
-      stream = remarkStream;
-    }
-
-    stream = stream.use(remark2rehype, { allowDangerousHtml: true }).use(raw);
-
-    if (rehypeStream) {
-      stream = rehypeStream;
-    }
+    stream = this.processPluginsFor("remark", stream);
+    stream = stream.use(remark2rehype, { allowDangerousHtml: true });
+    stream = this.processPluginsFor("rehype", stream);
 
     if (toc) {
       let tree: any = stream.use(jsonC).processSync(content);
       return tree.result;
     }
 
-    let tree: any = stream.use(stringify).processSync(content);
+    let tree: any = stream
+      .use(raw)
+      .use(stringify)
+      .processSync(content);
     return tree.contents;
   }
 
@@ -267,6 +261,8 @@ export class Markdown {
         ? stream.use(plugin.instance, plugin.options)
         : stream.use(plugin.instance);
     }
+
+    console.log(stream);
 
     return stream;
   }
