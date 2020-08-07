@@ -186,7 +186,7 @@ export class Markdown {
         extension: ".md",
         updatedAt: Date.now(),
         toc,
-        body,
+        body
       };
 
       return obj;
@@ -261,8 +261,6 @@ export class Markdown {
         ? stream.use(plugin.instance, plugin.options)
         : stream.use(plugin.instance);
     }
-
-    console.log(stream);
 
     return stream;
   }
