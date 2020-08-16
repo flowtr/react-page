@@ -25,6 +25,10 @@ export interface MarkdownPlugin {
   instance: () => {};
   options?: object;
 }
+
+export interface GenerateContentOptions {
+  toc: boolean;
+}
 /**
  * @property {any[]} remarkPlugins - String array for the names of the plugins to use
  * Alternatively, accepts an Object with 'name' and 'options' properties for especify lib options.
@@ -154,7 +158,7 @@ export class Markdown {
     if (Array.isArray(file)) {
       for (let item of file) {
         if (typeof item === "string") {
-          const itemFile = this.toObject(item, true);
+          const itemFile = this.toString(item);
           obj.push(itemFile);
         } else {
           this.logger.error("HTML mode only accepts strings");
@@ -163,7 +167,7 @@ export class Markdown {
       return obj;
     } else {
       if (typeof file === "string") {
-        obj = this.toObject(file);
+        obj = this.toString(file);
       } else {
         this.logger.error("HTML mode only accepts strings");
       }
@@ -172,31 +176,34 @@ export class Markdown {
     }
   }
 
-  private toObject(file: any, onlyBody: boolean = false) {
-    if (!onlyBody) {
-      let { data, content } = matter(file);
+  private toObject(file: any) {
+    let { data, content } = matter(file);
 
-      let json = this.generateContent(content, true);
-      let body = this.generateContent(content, false);
+    let json = this.generateContent(content, { toc: true });
+    let body = this.generateContent(content, { toc: false });
 
-      let toc: MarkdownToc[] = this.generateToc(json);
+    let toc: MarkdownToc[] = this.generateToc(json);
 
-      let obj: any = {
-        ...data,
-        extension: ".md",
-        updatedAt: Date.now(),
-        toc,
-        body
-      };
+    let obj: any = {
+      ...data,
+      extension: ".md",
+      updatedAt: Date.now(),
+      toc,
+      body,
+    };
 
-      return obj;
-    } else {
-      let body = this.generateContent(file);
-      return body;
-    }
+    return obj;
   }
 
-  private generateContent(content: string, toc: boolean = false): object {
+  private toString(file: any) {
+    let body = this.generateContent(file, { toc: false });
+    return body;
+  }
+
+  private generateContent(
+    content: string,
+    options: GenerateContentOptions
+  ): any {
     let stream = unified()
       .use(parse)
       .use(slug);
@@ -205,7 +212,7 @@ export class Markdown {
     stream = stream.use(remark2rehype, { allowDangerousHtml: true });
     stream = this.processPluginsFor("rehype", stream);
 
-    if (toc) {
+    if (options.toc) {
       let tree: any = stream.use(jsonC).processSync(content);
       return tree.result;
     }
