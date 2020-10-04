@@ -6,8 +6,6 @@ import * as unified from "unified";
 import * as stringify from "rehype-stringify";
 import * as raw from "rehype-raw";
 
-import { Loki, Collection } from "@lokidb/loki";
-
 const jsonC = require("../compilers/json");
 
 import { processMarkdownPlugins } from "../utils/plugins";
@@ -41,44 +39,32 @@ export interface MarkdownParserOptions {
   remarkPlugins?: any[];
   rehypePlugins?: any[];
   absolutePath?: string;
-  db?: MarkdownParserDatabaseOptions;
-}
-
-export interface MarkdownParserDatabaseOptions {
-  active: boolean;
-  collection?: string;
 }
 
 const defaultOptions: MarkdownParserOptions = {
   rehypePlugins: [],
   remarkPlugins: [],
-  db: { active: false },
 };
 
 export class Markdown {
   private options: MarkdownParserOptions;
   private absolutePath: string;
-  private dbInstance: any;
   private logger: Logger;
 
   constructor(options: MarkdownParserOptions = defaultOptions) {
+    // instance logger
     this.logger = new Logger();
 
+    // instance options
     this.options = options;
 
-    if (this.options.absolutePath) {
-      this.absolutePath = this.options.absolutePath;
-    } else {
-      this.absolutePath = cwd();
-    }
+    // instance absolute path for ext modules
+    this.absolutePath = this.options.absolutePath
+      ? this.options.absolutePath
+      : cwd();
 
-    if (this.options.db) {
-      this.dbInstance = this.options.db;
-    } else {
-      this.dbInstance = { active: false };
-    }
-
-    processMarkdownPlugins(this.options, this.absolutePath, this.dbInstance);
+    // process plugins
+    processMarkdownPlugins(this.options, this.absolutePath);
   }
 
   /**
@@ -87,64 +73,42 @@ export class Markdown {
    * @return {string} - Object stringified
    */
   public toJSON(file: any): any {
-    let obj: any = [];
-
     if (Array.isArray(file)) {
-      for (let item of file) {
-        if (typeof item === "string") {
-          const itemFile = this.toObject(item);
-          obj.push(itemFile);
-        } else {
-          const itemFile = this.toObject(item.file);
-
-          delete item.file;
-
-          obj.push({ ...itemFile, ...item });
-        }
-      }
-
-      if (this.options.db.active) {
-        const collectionName = this.options.db.collection
-          ? this.options.db.collection
-          : "data";
-
-        const db: Loki = new Loki();
-        const collection: Collection = db.addCollection(collectionName);
-
-        collection.insert(obj);
-
-        obj = collection.toJSON();
-      }
-
-      return obj;
+      return this.processMultipleFileJSON(file);
     } else {
-      if (typeof file === "string") {
-        obj = this.toObject(file);
-      } else {
-        obj = this.toObject(file.file);
-
-        delete file.file;
-
-        obj = { ...obj, ...file };
-      }
-
-      if (this.options.db.active) {
-        const collectionName = this.options.db.collection
-          ? this.options.db.collection
-          : "data";
-
-        const db: Loki = new Loki();
-        const collection: Collection = db.addCollection(collectionName);
-
-        collection.insertOne({
-          ...obj,
-        });
-
-        obj = collection.toJSON();
-      }
-
-      return obj;
+      return this.processSingleFileJSON(file);
     }
+  }
+
+  private processSingleFileJSON(file: any): any {
+    let obj: any;
+
+    if (typeof file === "string") {
+      obj = this.toObject(file);
+    } else {
+      obj = this.toObject(file.file);
+      delete file.file;
+      obj = { ...obj, ...file };
+    }
+
+    return obj;
+  }
+
+  private processMultipleFileJSON(file: any) {
+    let obj: any[] = [];
+
+    for (let item of file) {
+      if (typeof item === "string") {
+        const itemFile = this.toObject(item);
+        obj.push(itemFile);
+      } else {
+        const itemFile = this.toObject(item.file);
+        delete item.file;
+        obj.push({ ...itemFile, ...item });
+      }
+    }
+
+    return obj;
   }
 
   /**
@@ -153,27 +117,37 @@ export class Markdown {
    * @return {string} - Object stringified
    */
   public toHTML(file: any): any {
-    let obj: any = [];
-
     if (Array.isArray(file)) {
-      for (let item of file) {
-        if (typeof item === "string") {
-          const itemFile = this.toString(item);
-          obj.push(itemFile);
-        } else {
-          this.logger.error("HTML mode only accepts strings");
-        }
-      }
-      return obj;
+      return this.processMultipleFileHTML(file);
     } else {
-      if (typeof file === "string") {
-        obj = this.toString(file);
+      return this.processSingleFileHTML(file);
+    }
+  }
+
+  private processSingleFileHTML(file: any): any {
+    let obj: any;
+
+    if (typeof file === "string") {
+      obj = this.toString(file);
+    } else {
+      this.logger.error("HTML mode only accepts strings");
+    }
+
+    return obj;
+  }
+  private processMultipleFileHTML(file: any): any {
+    let obj: any[] = [];
+
+    for (let item of file) {
+      if (typeof item === "string") {
+        const itemFile = this.toString(item);
+        obj.push(itemFile);
       } else {
         this.logger.error("HTML mode only accepts strings");
       }
-
-      return obj;
     }
+
+    return obj;
   }
 
   private toObject(file: any) {

@@ -12,12 +12,10 @@ const logger = new Logger();
 export function processMarkdownPlugins(
   options: MarkdownParserOptions,
   resolvePath: string,
-  db: any
 ): void {
   options.remarkPlugins = loopPLugins("remark", options, resolvePath);
   options.rehypePlugins = loopPLugins("rehype", options, resolvePath);
   options.absolutePath = resolvePath;
-  options.db = db;
 }
 
 /**

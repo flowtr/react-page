@@ -26,14 +26,14 @@ Only works in nodejs environment. Not browser.
   <code-block label="Yarn" active>
 
 ```bash
-yarn add node-markdown-parser
+yarn add @cenguidanos/node-markdown-parser
 ```
 
   </code-block>
   <code-block label="NPM">
 
 ```bash
-npm install node-markdown-parser
+npm install @cenguidanos/node-markdown-parser
 ```
 
   </code-block>
@@ -42,13 +42,13 @@ npm install node-markdown-parser
 ## Import
 
 ```ts
-import { Markdown } from "node-markdown-parser";
+import { Markdown } from "@cenguidanos/node-markdown-parser";
 ```
 
 ### Create `MarkdownParserOptions`
 
 ```ts
-import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
+import { Markdown, MarkdownParserOptions } from "@cenguidanos/node-markdown-parser";
 
 let markdownOptions: MarkdownParserOptions;
 
@@ -69,13 +69,14 @@ subtitle: To World
 ### Parse to `JSON`
 
 ```ts
-import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
+import { readFileSync } from  "fs";
+import { Markdown, MarkdownParserOptions } from "@cenguidanos/node-markdown-parser";
 
 let markdownOptions: MarkdownParserOptions;
 
 let markdown: Markdown = new Markdown(markdownOptions);
 
-let file: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
+let file: string = readFileSync("./markdown/example.md", "utf-8");
 
 let data = markdown.toJSON(file);
 
@@ -174,78 +175,6 @@ subtitle: To World
 }
 ```
 
-## LokiDB
-
-Add `db.active` to true if you want to receive a collection **lokidb** format object:
-
-```ts
-let markdownOptions: MarkdownParserOptions = {
-  remarkPlugins: ["remark-attr"],
-  db: {
-    active: true,
-  },
-};
-```
-
-#### Output
-
-```json
-{
-  "name": "data",
-  "unindexedSortComparator": "js",
-  "defaultLokiOperatorPackage": "js",
-  "_dynamicViews": [],
-  "uniqueNames": [],
-  "transforms": {},
-  "rangedIndexes": {},
-  "_data": [
-    {
-      "title": "With Love",
-      "subtitle": "To World",
-      "extension": ".md",
-      "updatedAt": 1596298947212,
-      "toc": [
-        {
-          "id": "simple-markdown-doc",
-          "depth": 1,
-          "text": "Simple markdown doc"
-        }
-      ],
-      "body": "<h1 style=\"color:yellow;\" id=\"simple-markdown-doc\">Simple markdown doc</h1>",
-      "meta": { "version": 0, "revision": 0, "created": 1596298947212 },
-      "$loki": 1
-    }
-  ],
-  "idIndex": [1],
-  "maxId": 1,
-  "_dirty": true,
-  "_nestedProperties": [],
-  "transactional": false,
-  "asyncListeners": false,
-  "disableMeta": false,
-  "disableChangesApi": true,
-  "disableDeltaChangesApi": true,
-  "cloneObjects": false,
-  "cloneMethod": "deep",
-  "changes": [],
-  "_fullTextSearch": null
-}
-```
-
-### Collection
-
-```ts
-let markdownOptions: MarkdownParserOptions = {
-  remarkPlugins: ["remark-attr"],
-  db: {
-    active: true,
-    collection: "content",
-  },
-};
-```
-
-See: [LokiDB](https://github.com/LokiJS-Forge/LokiDB)
-
 ## Configuration
 
 ### Add absolute path
@@ -265,13 +194,14 @@ let markdownOptions: MarkdownParserOptions = {
 You can add extra properties in format
 
 ```ts
-import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
+import { readFileSync } from  "fs";
+import { Markdown, MarkdownParserOptions } from "node-markddbown-parser";
 
 let markdownOptions: MarkdownParserOptions;
 
 let markdown: Markdown = new Markdown(markdownOptions);
 
-let file: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
+let file: string = readFileSync("./markdown/example.md", "utf-8");
 
 let data = markdown.toJSON({ file, date: Date.now(), age: 27 });
 
@@ -302,13 +232,14 @@ console.log(data);
 ### Array as input
 
 ```ts
-import { Markdown, MarkdownParserOptions } from "node-markdown-parser";
+import { readFileSync } from  "fs";
+import { Markdown, MarkdownParserOptions } from "@cenguidanos/node-markdown-parser";
 
 let markdownOptions: MarkdownParserOptions;
 
 let markdown: Markdown = new Markdown(markdownOptions);
 
-let file: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
+let file: string = readFileSync("./markdown/example.md", "utf-8");
 
 let data = markdown.toJSON([
   { file, date: Date.now(), age: 27 },
@@ -353,14 +284,14 @@ import {
   MarkdownParserOptions,
 } from "../node-markdown-parser/lib/index";
 
-import * as vfile from "to-vfile";
+import { readFileSync } from  "fs";
 
 // create parser
 let markdownOptions: MarkdownParserOptions;
 let markdown: Markdown = new Markdown(markdownOptions);
 
 // read files from system
-let file1: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
+let file1: string = readFileSync("./markdown/example.md", "utf-8");
 let file2 = "## Hello, from file two";
 
 // parse array of files
@@ -390,47 +321,18 @@ console.log(data);
 ]
 ```
 
-#### with **Lokidb** support:
-
-```ts
-import {
-  Markdown,
-  MarkdownParserOptions,
-} from "../node-markdown-parser/lib/index";
-
-import * as vfile from "to-vfile";
-
-// create parser
-let markdownOptions: MarkdownParserOptions = {
-  remarkPLugins: ["remark-math", "remark-attr"],
-  rehypePlugins: ["rehype-katex"],
-  db: {
-    active: true,
-    collection: "parser",
-  },
-};
-let markdown: Markdown = new Markdown(markdownOptions);
-
-// read files from system
-let file1: string = vfile.readSync("./markdown/example.md", "utf-8");
-let file2 = "## Hello, from file two";
-
-// parse array of files
-let data = markdown.toJSON([file1, file2]);
-
-console.log(data);
-```
-
 ### Only HTML
 
 #### Retrieve only the body of the markdown with `toHTML()`:
 
 ```ts
+import { readFileSync } from  "fs";
+
 let markdownOptions: MarkdownParserOptions;
 
 let markdown: Markdown = new Markdown(markdownOptions);
 
-let file: string = vfile.readSync("./markdown/example.md", "utf-8").contents;
+let file: string = readFileSync("./markdown/example.md", "utf-8");
 
 let data = markdown.toHTML([file, "# Other stuff in string format"]);
 
@@ -457,7 +359,6 @@ console.log(data);
 ## Special thanks
 
 - [@nuxt/content](https://github.com/nuxt/content)
-- [@lokidb/loki](https://github.com/LokiJS-Forge/LokiDB)
 - [unifiedjs/unified](https://github.com/unifiedjs/unified)
 - [remarkjs/remark](https://github.com/remarkjs/remark)
 - [rehypejs/rehype](https://github.com/rehypejs/rehype)
