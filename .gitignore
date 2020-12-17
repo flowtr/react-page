@@ -1,6 +1,0 @@
-node_modules/
-dist/
-test/
-.ultra.cache.json
-build/
-.idea
