@@ -1,3 +1,6 @@
 node_modules/
-lib/
+dist/
 test/
+.ultra.cache.json
+build/
+.idea

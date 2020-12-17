@@ -1,62 +1,73 @@
 {
-  "name": "@cenguidanos/node-markdown-parser",
-  "version": "1.0.6-9",
-  "description": "Node Markdown Parser for transform markdown files to JSON object",
-  "author": {
-    "name": "Cristian Enguídanos Nebot",
-    "email": "cenguidanos@protonmail.com"
-  },
-  "repository": {
-    "url": "https://github.com/cenguidanos/node-markdown-parser"
-  },
-  "main": "lib/index.js",
-  "typings": "lib/index.js",
-  "license": "MIT",
-  "private": false,
-  "scripts": {
-    "prebuild:lib": "rimraf lib",
-    "build:lib": "tsc -p .",
-    "docs:lib": "yarn build:lib && typedoc --out typedoc",
-    "dev:nuxt": "nuxt",
-    "build:nuxt": "nuxt build",
-    "start:nuxt": "nuxt start",
-    "generate:nuxt": "nuxt generate",
-    "format": "prettier src/**/* --write --quiet",
-    "prepublishOnly": "yarn run format && yarn prebuild:lib && yarn build:lib"
-  },
-  "devDependencies": {
-    "@nuxt/content-theme-docs": "^0.6.1",
-    "@types/node": "^14.11.2",
-    "nuxt": "^2.14.6",
-    "prettier": "^2.2.1",
-    "rimraf": "^3.0.2",
-    "ts-node": "^9.0.0",
-    "typedoc": "^0.19.2",
-    "typescript": "^4.0.3"
-  },
-  "dependencies": {
-    "csvtojson": "^2.0.10",
-    "gray-matter": "^4.0.2",
-    "rehype-raw": "^5.0.0",
-    "rehype-stringify": "^8.0.0",
-    "remark-parse": "^8.0.3",
-    "remark-rehype": "^8.0.0",
-    "remark-slug": "^6.0.0",
-    "unified": "^9.2.0",
-    "xml2js": "^0.4.23"
-  },
-  "keywords": [
-    "typescript",
-    "markdown",
-    "prismjs",
-    "remark",
-    "rehype",
-    "toc",
-    "yaml",
-    "frontmatter",
-    "parser",
-    "node",
-    "emoji",
-    "docs"
-  ]
+    "name": "@flowtr/react-page",
+    "version": "1.0.1",
+    "description": "React page loader that primarily loads markdown",
+    "author": {
+        "name": "Theo Paris",
+        "email": "theoparisdesigns@gmail.com"
+    },
+    "repository": {
+        "url": "https://github.com/flowtr/react-page"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://1.srv.toes.tech:4873"
+    },
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "build": "tsc",
+        "format": "prettier src/**/* --write",
+        "start-storybook": "start-storybook -p 9001",
+        "build-storybook": "build-storybook -o ./build",
+        "deploy": "pnpm run build-storybook && deploy-to-github-pages -d build -m gh-pages",
+        "prepublishOnly": "pnpm run format && pnpm run build"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.12.10",
+        "@storybook/addon-actions": "^6.1.11",
+        "@storybook/addon-controls": "^6.1.11",
+        "@storybook/addon-essentials": "^6.1.11",
+        "@storybook/addon-links": "^6.1.11",
+        "@storybook/react": "^6.1.11",
+        "@types/dompurify": "^2.0.4",
+        "@types/node": "^14.11.2",
+        "babel-loader": "^8.2.2",
+        "deploy-to-github-pages": "^1.0.0",
+        "prettier": "^2.2.1",
+        "typedoc": "^0.19.2",
+        "typescript": "^4.0.3"
+    },
+    "dependencies": {
+        "@theoparis/node-markdown-parser": "1.0.1",
+        "dompurify": "^2.2.4",
+        "push-dir": "^0.4.1",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    },
+    "peerDependencies": {
+        "@theoparis/node-markdown-parser": "1.0.1",
+        "dompurify": "^2.2.4",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    },
+    "keywords": [
+        "typescript",
+        "markdown",
+        "prismjs",
+        "remark",
+        "rehype",
+        "toc",
+        "yaml",
+        "frontmatter",
+        "parser",
+        "node",
+        "emoji",
+        "docs"
+    ]
 }
