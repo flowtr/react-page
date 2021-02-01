@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
-import { Markdown } from "@theoparis/node-markdown-parser";
-import { MarkdownJSON } from "@theoparis/node-markdown-parser";
+import { Markdown, MarkdownJSON } from "@cenguidanos/node-markdown-parser";
 
 export interface MarkdownProps {
     path: string;
@@ -28,6 +27,11 @@ export const MarkdownPage = (
     const [data, setData] = useState<
         MarkdownJSON<Record<string, unknown>> | undefined
     >(undefined);
+
+    if (render.subtitle === undefined) render.subtitle = true;
+    if (render.title === undefined) render.title = true;
+    if (render.date === undefined) render.date = true;
+
     useEffect(() => {
         if (path.trim() === "") return;
         fetch(path)
