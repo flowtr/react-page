@@ -52,7 +52,7 @@ export const MarkdownPage = (
             </h3>
             <small className={"page-date"}>
                 {data && render.date
-                    ? new Date(data.updatedAt).toISOString()
+                    ? new Date(data.updatedAt).toLocaleDateString()
                     : ""}
             </small>
             <div
